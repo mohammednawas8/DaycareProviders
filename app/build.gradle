@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -63,6 +64,11 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-auth-ktx:21.3.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.5.0'
 
 
 }
