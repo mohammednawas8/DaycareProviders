@@ -2,70 +2,34 @@ package com.loc.daycareproviders.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.loc.daycareproviders.domain.model.Parent
-import com.loc.daycareproviders.domain.model.Student
-import com.loc.daycareproviders.domain.model.Teacher
+import com.loc.daycareproviders.domain.model.User
 import com.loc.daycareproviders.domain.repository.AuthenticationRepository
-import com.loc.daycareproviders.helper.getErrorMessage
-import com.loc.daycareproviders.helper.validateEmail
-import com.loc.daycareproviders.helper.validatePassword
-import com.loc.daycareproviders.util.Constants.PARENT_COLLECTION
-import com.loc.daycareproviders.util.Constants.STUDENT_COLLECTION
-import com.loc.daycareproviders.util.Constants.TEACHER_COLLECTION
-import com.loc.daycareproviders.util.DataState
-import com.loc.daycareproviders.util.UIComponent
+import com.loc.daycareproviders.util.Constants.USER_COLLECTION
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class AuthenticationRepositoryImpl(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ) : AuthenticationRepository {
-
-    override suspend fun createStudentAccount(
-        student: Student,
-        email: String,
-        password: String,
-    ): Student? {
+    override suspend fun createAccount(user: User, email: String, password: String): User? {
         return withContext(Dispatchers.IO) {
-            val accountCreationResult = auth.createUserWithEmailAndPassword(email, password).await()
-            if (accountCreationResult.user == null) {
+            val authResult = auth.createUserWithEmailAndPassword(email, password).await()
+            if (authResult.user == null) {
                 return@withContext null
             }
-            firestore.collection(STUDENT_COLLECTION).document().set(student).await()
-            return@withContext student
+            firestore.collection(USER_COLLECTION).document().set(user).await()
+            return@withContext user
         }
     }
 
-    override suspend fun createParentAccount(
-        parent: Parent,
-        email: String,
-        password: String,
-    ): Parent? {
-        return withContext(Dispatchers.IO) {
-            val accountCreationResult = auth.createUserWithEmailAndPassword(email, password).await()
-            if (accountCreationResult.user == null) {
-                return@withContext null
-            }
-            firestore.collection(PARENT_COLLECTION).document().set(parent).await()
-            return@withContext parent
-        }
+    override suspend fun login( email: String, password: String): Boolean {
+        val authResult = auth.signInWithEmailAndPassword(email, password).await()
+        return authResult.user != null
     }
 
-    override suspend fun createTeacherAccount(
-        teacher: Teacher,
-        email: String,
-        password: String,
-    ): Teacher? {
-        return withContext(Dispatchers.IO) {
-            val accountCreationResult = auth.createUserWithEmailAndPassword(email, password).await()
-            if (accountCreationResult.user == null) {
-                return@withContext null
-            }
-            firestore.collection(TEACHER_COLLECTION).document().set(teacher).await()
-            return@withContext teacher
-        }
+    override suspend fun logout() {
+        auth.signOut()
     }
 }

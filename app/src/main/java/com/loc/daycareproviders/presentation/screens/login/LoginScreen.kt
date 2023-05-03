@@ -98,14 +98,15 @@ fun LoginScreen(
                     imeAction = ImeAction.Go,
                     onValueChanged = viewModel::changePassword,
                     onTrailingIconClick = viewModel::changePasswordVisibility,
-                    onGo = viewModel::login
+                    onGo = { /*TODO: Call login from ViewModel*/ }
                 )
             }
 
 
             Column(
                 modifier = Modifier
-                    .weight(1f).fillMaxWidth(),
+                    .weight(1f)
+                    .fillMaxWidth(),
                 horizontalAlignment = CenterHorizontally
             ) {
                 if (state.isLoading) {
@@ -118,7 +119,7 @@ fun LoginScreen(
                         modifier = Modifier
                             .fillMaxWidth(),
                         text = stringResource(id = R.string.login),
-                        onClick = {}
+                        onClick = { /*TODO: Call login from ViewModel*/ }
                     )
                 }
             }

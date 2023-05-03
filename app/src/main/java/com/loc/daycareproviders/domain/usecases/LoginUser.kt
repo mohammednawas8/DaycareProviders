@@ -1,23 +1,27 @@
 package com.loc.daycareproviders.domain.usecases
 
-import com.loc.daycareproviders.domain.model.Parent
+import com.google.android.gms.common.internal.AccountType
 import com.loc.daycareproviders.domain.repository.AuthenticationRepository
 import com.loc.daycareproviders.helper.getLoginErrorMessage
+import com.loc.daycareproviders.helper.getRegisterErrorMessage
 import com.loc.daycareproviders.helper.validateEmail
 import com.loc.daycareproviders.util.DataState
 import com.loc.daycareproviders.util.UIComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class CreateTeacherAccount(
+class LoginUser(
     private val authenticationRepository: AuthenticationRepository,
 ) {
 
-    operator fun invoke(
-        parent: Parent,
+    suspend operator fun invoke(
+        accountType: AccountType,
         email: String,
         password: String,
-    ): Flow<DataState<Parent>> {
+    ): Flow<DataState<Unit>> {
+        //1- Call login from authenticationRepo
+        //2- Save the loged account type into data store preferences
+
         return flow {
             try {
                 emit(DataState.Loading(isLoading = true))
@@ -26,12 +30,8 @@ class CreateTeacherAccount(
 
                 // When email and password are valid we register the user
                 if (emailValidation.isValid && passwordValidation.isValid) {
-                    val registeredParent = authenticationRepository.createParentAccount(
-                        parent = parent,
-                        email = email,
-                        password = password
-                    )
-                    if (registeredParent == null) { //Unknown error
+                    val registeredParent = authenticationRepository.login(email = email,password = password)
+                    if (!registeredParent) { //Unknown error
                         emit(
                             DataState.Response(
                                 error = null,
@@ -41,7 +41,7 @@ class CreateTeacherAccount(
                             )
                         )
                     } else {
-                        emit(DataState.Success(data = registeredParent))
+                        emit(DataState.Success(data = Unit))
                     }
                 }
 
@@ -78,5 +78,6 @@ class CreateTeacherAccount(
                 emit(DataState.Loading(isLoading = false))
             }
         }
+
     }
 }
