@@ -1,5 +1,6 @@
 package com.loc.daycareproviders.helper
 
+import android.util.Log
 import android.util.Patterns
 
 
@@ -14,6 +15,34 @@ fun validateEmail(email: String): ValidationResult {
         isValid = true,
         message = null
     )
+}
+
+fun validateFirstName(name: String): ValidationResult {
+   return if (name.isEmpty()){
+        ValidationResult(
+            isValid = false,
+            message = "First name cannot be empty"
+        )
+    }else{
+       ValidationResult(
+           isValid = true,
+           message = null
+       )
+   }
+}
+
+fun validateLastName(name: String): ValidationResult {
+    return if (name.isEmpty()){
+        ValidationResult(
+            isValid = false,
+            message = "Last name cannot be empty"
+        )
+    }else{
+        ValidationResult(
+            isValid = true,
+            message = null
+        )
+    }
 }
 
 fun validatePassword(password: String): ValidationResult {

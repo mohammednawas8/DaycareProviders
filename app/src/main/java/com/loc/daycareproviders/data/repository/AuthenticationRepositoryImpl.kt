@@ -1,5 +1,6 @@
 package com.loc.daycareproviders.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.loc.daycareproviders.domain.model.User
@@ -13,7 +14,7 @@ class AuthenticationRepositoryImpl(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ) : AuthenticationRepository {
-    override suspend fun createAccount(user: User, email: String, password: String): User? {
+    override suspend fun registerAccount(user: User, email: String, password: String): User? {
         return withContext(Dispatchers.IO) {
             val authResult = auth.createUserWithEmailAndPassword(email, password).await()
             if (authResult.user == null) {
@@ -24,7 +25,7 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun login( email: String, password: String): Boolean {
+    override suspend fun login(email: String, password: String): Boolean {
         val authResult = auth.signInWithEmailAndPassword(email, password).await()
         return authResult.user != null
     }

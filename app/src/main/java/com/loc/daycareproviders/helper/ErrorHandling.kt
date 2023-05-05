@@ -12,12 +12,12 @@ fun getErrorMessage(e: Exception): String {
 fun getLoginErrorMessage(e: Exception): String {
     return when (e) {
         is FirebaseAuthInvalidUserException -> "User not found"
-        is FirebaseAuthInvalidCredentialsException -> "User not found"
+        is FirebaseAuthInvalidCredentialsException -> "Wrong email or password"
         else -> "Unknown Error"
     }
 }
 
-fun getRegisterErrorMessage(e: Exception): String {
+fun getCreateAccountErrorMessage(e: Exception): String {
     return when (e) {
         is FirebaseAuthUserCollisionException -> "The email address is already in use by another account"
         else -> "Unknown Error"

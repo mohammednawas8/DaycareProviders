@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.loc.daycareproviders.R
 import com.loc.daycareproviders.ui.Dimens.ICON_SIZE
 import com.loc.daycareproviders.ui.theme.Blue
 
@@ -32,7 +33,7 @@ fun StandardTextField(
     modifier: Modifier = Modifier,
     text: String,
     label: String,
-    @DrawableRes trailingIcon: Int,
+    @DrawableRes trailingIcon: Int? = null,
     keyboardType: KeyboardType,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     imeAction: ImeAction,
@@ -55,16 +56,18 @@ fun StandardTextField(
             unfocusedLeadingIconColor = Blue.copy(alpha = 0.8f),
         ),
         trailingIcon = {
-            IconButton(
-                onClick = { onTrailingIconClick?.invoke() },
-                content = {
-                    Icon(
-                        painter = painterResource(id = trailingIcon),
-                        null,
-                        modifier = Modifier.size(ICON_SIZE)
-                    )
-                }
-            )
+            trailingIcon?.let {
+                IconButton(
+                    onClick = { onTrailingIconClick?.invoke() },
+                    content = {
+                        Icon(
+                            painter = painterResource(id = trailingIcon),
+                            null,
+                            modifier = Modifier.size(ICON_SIZE)
+                        )
+                    }
+                )
+            }
         },
         singleLine = true,
         visualTransformation = visualTransformation,

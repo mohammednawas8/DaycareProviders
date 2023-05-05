@@ -5,6 +5,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.loc.daycareproviders.data.repository.AuthenticationRepositoryImpl
 import com.loc.daycareproviders.domain.repository.AuthenticationRepository
+import com.loc.daycareproviders.domain.usecases.LoginUser
+import com.loc.daycareproviders.domain.usecases.RegisterUser
 import com.loc.daycareproviders.domain.usecases.UseCases
 import dagger.Module
 import dagger.Provides
@@ -31,9 +33,8 @@ object AppModule {
         authenticationRepository: AuthenticationRepository,
     ): UseCases {
         return UseCases(
-            createStudentAccount = CreateStudentAccount(authenticationRepository),
-            createTeacherAccount = CreateTeacherAccount(authenticationRepository),
-            createParentAccount = CreateParentAccount(authenticationRepository),
+            registerUser = RegisterUser(authenticationRepository),
+            loginUser = LoginUser(authenticationRepository)
         )
     }
 
