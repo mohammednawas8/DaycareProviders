@@ -164,7 +164,10 @@ fun RegisterScreen(
                         BlueButton(
                             modifier = Modifier.fillMaxWidth(),
                             text = stringResource(id = R.string.register),
-                            onClick = viewModel::registerAccount
+                            onClick = {
+                                viewModel.registerAccount()
+                                keyboard?.hide()
+                            }
                         )
                     }
                 }

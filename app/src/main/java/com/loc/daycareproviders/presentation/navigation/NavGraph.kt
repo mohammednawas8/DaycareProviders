@@ -36,8 +36,8 @@ fun NavGraph() {
             route = Screen.LoginScreen.route,
             arguments = Screen.LoginScreen.arguments
         ) {
-            val accountType = it.arguments?.getString("accountType") ?: "Unknwon"
-            LoginScreen(navigate = { route ->
+            val accountType = it.arguments?.getString("accountType") ?: "Unknown"
+            LoginScreen( navigate = { route ->
                 navController.navigate(route)
             })
         }

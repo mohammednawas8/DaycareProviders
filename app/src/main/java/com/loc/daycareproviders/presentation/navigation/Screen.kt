@@ -29,8 +29,22 @@ sealed class Screen(
         }
     }
 
-    object RegisterScreen : Screen(route = "register_screen")
-
+    object RegisterScreen : Screen(
+        route = "register_screen/{accountType}",
+        arguments = listOf(
+            navArgument(
+                name = "accountType",
+                builder = {
+                    type = NavType.StringType
+                    nullable = false
+                }
+            )
+        )
+    ){
+        fun navigate(arg: String): String{
+            return "register_screen/$arg"
+        }
+    }
 
 
     object HomeScreen : Screen(route = "home_screen")

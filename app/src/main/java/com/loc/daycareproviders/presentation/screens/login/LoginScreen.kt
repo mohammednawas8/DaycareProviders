@@ -13,8 +13,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -29,7 +29,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.loc.daycareproviders.R
 import com.loc.daycareproviders.presentation.common.BlueButton
 import com.loc.daycareproviders.presentation.common.HalfCircle
@@ -53,6 +52,12 @@ fun LoginScreen(
 
 
     StandardScreen(queue = state.queue, removeUiComponent = viewModel::removeUiComponent) {
+
+        LaunchedEffect(key1 = viewModel.navigation) {
+            viewModel.navigation.collect { route ->
+                navigate(route)
+            }
+        }
 
         Column(
             modifier = Modifier
@@ -126,11 +131,14 @@ fun LoginScreen(
                             modifier = Modifier
                                 .fillMaxWidth(),
                             text = stringResource(id = R.string.login),
-                            onClick = viewModel::login
+                            onClick = {
+                                viewModel.login()
+                                keyboard?.hide()
+                            }
                         )
                     }
 
-                    TextButton(onClick = { navigate(Screen.RegisterScreen.route) }) {
+                    TextButton(onClick = { navigate(Screen.RegisterScreen.navigate(viewModel.accountType)) }) {
                         Text(text = "Register")
                     }
                 }

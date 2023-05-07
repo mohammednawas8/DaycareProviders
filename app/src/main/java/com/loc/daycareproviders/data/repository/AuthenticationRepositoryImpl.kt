@@ -3,8 +3,10 @@ package com.loc.daycareproviders.data.repository
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.loc.daycareproviders.domain.model.AccountType
 import com.loc.daycareproviders.domain.model.User
 import com.loc.daycareproviders.domain.repository.AuthenticationRepository
+import com.loc.daycareproviders.helper.WrongAccountTypeException
 import com.loc.daycareproviders.util.Constants.USER_COLLECTION
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -25,12 +27,25 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun login(email: String, password: String): Boolean {
+    override suspend fun login(accountType: AccountType,email: String, password: String): Boolean {
         val authResult = auth.signInWithEmailAndPassword(email, password).await()
-        return authResult.user != null
+        val user = firestore.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
+            .toObjects(User::class.java).singleOrNull()
+        Log.d("test",user.toString())
+        if (authResult.user != null) {
+            user?.let {
+                if (user.accountType != accountType){
+                    logout()
+                    throw WrongAccountTypeException()
+                }
+                return true
+            }
+        }
+        return false
     }
 
     override suspend fun logout() {
         auth.signOut()
     }
 }
+

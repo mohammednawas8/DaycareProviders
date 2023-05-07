@@ -105,6 +105,7 @@ class RegisterUser(
                 )
             } finally {
                 emit(DataState.Loading(isLoading = false))
+                authenticationRepository.logout()
             }
         }
     }

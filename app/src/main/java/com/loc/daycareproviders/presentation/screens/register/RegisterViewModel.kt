@@ -49,8 +49,6 @@ class RegisterViewModel @Inject constructor(
             else -> AccountType.STUDENT
         }
 
-        Log.d("test2", accountType.toString())
-
     }
 
     fun updateFirstName(firstName: String) {
@@ -78,6 +76,7 @@ class RegisterViewModel @Inject constructor(
             val user = User(
                 firstName = state.value.firstName,
                 lastName = state.value.lastName,
+                email = state.value.email,
                 accountType = accountType!!
             )
             useCases.registerUser(

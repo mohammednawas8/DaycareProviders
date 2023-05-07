@@ -1,5 +1,6 @@
 package com.loc.daycareproviders.domain.usecases
 
+import com.loc.daycareproviders.domain.model.AccountType
 import com.loc.daycareproviders.domain.repository.AuthenticationRepository
 import com.loc.daycareproviders.helper.getLoginErrorMessage
 import com.loc.daycareproviders.helper.validateEmail
@@ -14,6 +15,7 @@ class LoginUser(
 ) {
 
     operator fun invoke(
+        accountType: AccountType,
         email: String,
         password: String,
     ): Flow<DataState<Unit>> {
@@ -27,7 +29,12 @@ class LoginUser(
 
                 // When email and password are valid we register the user
                 if (emailValidation.isValid && passwordValidation.isValid) {
-                    val registeredParent = authenticationRepository.login(email = email,password = password)
+                    val registeredParent =
+                        authenticationRepository.login(
+                            accountType = accountType,
+                            email = email,
+                            password = password
+                        )
                     if (!registeredParent) { //Unknown error
                         emit(
                             DataState.Response(
@@ -65,6 +72,7 @@ class LoginUser(
                 }
             } catch (e: Exception) {
                 val errorMessage = getLoginErrorMessage(e)
+                e.printStackTrace()
                 emit(
                     DataState.Response(
                         error = e,

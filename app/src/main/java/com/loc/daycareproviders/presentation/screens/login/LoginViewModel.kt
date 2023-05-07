@@ -3,8 +3,10 @@ package com.loc.daycareproviders.presentation.screens.login
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.loc.daycareproviders.domain.model.stringToAccountType
 import com.loc.daycareproviders.domain.usecases.UseCases
 import com.loc.daycareproviders.presentation.navigation.Screen
 import com.loc.daycareproviders.util.DataState
@@ -19,9 +21,11 @@ import java.util.LinkedList
 import javax.inject.Inject
 
 val TAG = "LoginViewModel"
+
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val useCases: UseCases,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(LoginState())
@@ -30,6 +34,8 @@ class LoginViewModel @Inject constructor(
     //Navigate up after logging the account
     private val _navigation = MutableSharedFlow<String>()
     val navigation = _navigation.asSharedFlow()
+
+    var accountType: String = savedStateHandle["accountType"] ?: "UNKNOWN"
 
     fun updateEmail(newEmail: String) {
         _state.value = state.value.copy(email = newEmail)
@@ -45,6 +51,7 @@ class LoginViewModel @Inject constructor(
 
     fun login() {
         useCases.loginUser.invoke(
+            accountType = stringToAccountType(accountType),
             email = state.value.email.trim(),
             password = state.value.password
         ).onEach { dataState ->
@@ -65,14 +72,14 @@ class LoginViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun appendToQueue(uiComponent: UIComponent){
+    private fun appendToQueue(uiComponent: UIComponent) {
         val queue = state.value.queue
         queue.add(uiComponent)
         _state.value = _state.value.copy(queue = LinkedList()) //To force compose.
         _state.value = _state.value.copy(queue = queue)
     }
 
-    fun removeUiComponent(){
+    fun removeUiComponent() {
         val queue = state.value.queue
         queue.remove()
         _state.value = _state.value.copy(queue = LinkedList()) //To force compose.

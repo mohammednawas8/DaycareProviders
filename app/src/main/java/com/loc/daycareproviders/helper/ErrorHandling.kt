@@ -13,6 +13,7 @@ fun getLoginErrorMessage(e: Exception): String {
     return when (e) {
         is FirebaseAuthInvalidUserException -> "User not found"
         is FirebaseAuthInvalidCredentialsException -> "Wrong email or password"
+        is WrongAccountTypeException -> "Wrong account type"
         else -> "Unknown Error"
     }
 }
@@ -24,4 +25,5 @@ fun getCreateAccountErrorMessage(e: Exception): String {
     }
 }
 
+class WrongAccountTypeException: Exception()
 
