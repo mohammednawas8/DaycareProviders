@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.loc.daycareproviders.R
 import com.loc.daycareproviders.ui.Dimens.ICON_SIZE
 import com.loc.daycareproviders.ui.theme.Blue
+import com.loc.daycareproviders.ui.theme.WhitePinkLight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +55,11 @@ fun StandardTextField(
             textColor = Color.Black,
             focusedLeadingIconColor = Blue.copy(alpha = 0.8f),
             unfocusedLeadingIconColor = Blue.copy(alpha = 0.8f),
+            focusedLabelColor = Color.Black.copy(alpha = 0.8f),
+            unfocusedLabelColor = Color.Black.copy(alpha = 0.8f),
+            containerColor = WhitePinkLight,
+            focusedTrailingIconColor = Color.Black.copy(alpha = 0.9f),
+            unfocusedTrailingIconColor = Color.Black.copy(alpha = 0.9f)
         ),
         trailingIcon = {
             trailingIcon?.let {

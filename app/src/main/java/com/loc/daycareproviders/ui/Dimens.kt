@@ -12,9 +12,9 @@ object Dimens {
 
     val ROUNDED_CORNER = 10.dp
 
-    val ACCOUNT_OPTION_ICON = 80.dp
+    val ACCOUNT_OPTION_ICON = 70.dp
 
-    val ACCOUNT_OPTION_ITEM = 100.dp
+    val ACCOUNT_OPTION_ITEM = 80.dp
 
     val ICON_SIZE = 24.dp
 

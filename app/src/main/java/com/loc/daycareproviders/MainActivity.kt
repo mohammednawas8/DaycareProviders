@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import com.loc.daycareproviders.presentation.navigation.NavGraph
 import com.loc.daycareproviders.presentation.screens.login.LoginScreen
 import com.loc.daycareproviders.presentation.screens.login.LoginViewModel
 import com.loc.daycareproviders.presentation.screens.register.RegisterScreen
@@ -16,7 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DaycareProvidersTheme {
-                RegisterScreen()
+                NavGraph()
             }
         }
     }

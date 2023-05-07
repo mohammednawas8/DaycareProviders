@@ -12,22 +12,35 @@ import com.loc.daycareproviders.domain.usecases.UseCases
 import com.loc.daycareproviders.util.DataState
 import com.loc.daycareproviders.util.UIComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import java.util.LinkedList
 import javax.inject.Inject
 
 
 val TAG = "RegisterViewModel"
+
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val useCases: UseCases,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
+    private val _state = mutableStateOf(RegisterState())
+    val state: State<RegisterState> = _state
+
+    //Navigate up after registering the account
+    private val _navigation = MutableSharedFlow<Unit>()
+    val navigation = _navigation.asSharedFlow()
+
     private var accountType: AccountType?
 
     init {
         val accountType: String? = savedStateHandle["accountType"]
+
 
         this.accountType = when (accountType) {
             "STUDENT" -> AccountType.STUDENT
@@ -36,10 +49,9 @@ class RegisterViewModel @Inject constructor(
             else -> AccountType.STUDENT
         }
 
-    }
+        Log.d("test2", accountType.toString())
 
-    private val _state = mutableStateOf(RegisterState())
-    val state: State<RegisterState> = _state
+    }
 
     fun updateFirstName(firstName: String) {
         _state.value = state.value.copy(firstName = firstName)
@@ -57,6 +69,10 @@ class RegisterViewModel @Inject constructor(
         _state.value = state.value.copy(password = newPassword)
     }
 
+    fun changePasswordVisibility() {
+        _state.value = state.value.copy(isPasswordVisible = !state.value.isPasswordVisible)
+    }
+
     fun registerAccount() {
         accountType?.let {
             val user = User(
@@ -66,27 +82,37 @@ class RegisterViewModel @Inject constructor(
             )
             useCases.registerUser(
                 user = user,
-                email = state.value.email,
+                email = state.value.email.trim(),
                 password = state.value.password
             ).onEach { dataState ->
                 when (dataState) {
                     is DataState.Loading -> _state.value =
                         _state.value.copy(isLoading = dataState.isLoading)
 
-                    is DataState.Success -> {/*TODO: Navigate the error*/
-
+                    is DataState.Success -> {
+                        viewModelScope.launch {
+                            _navigation.emit(Unit)
+                        }
                     }
-
                     is DataState.Response -> {/*TODO: Handel the error*/
-                        //Learn logging like pros
-                        Log.d(
-                            TAG,
-                            "Error ${((dataState.uiComponent) as UIComponent.Toast).message}"
-                        )
+                        appendToQueue(dataState.uiComponent)
                     }
                 }
             }.launchIn(viewModelScope)
         }
+    }
+
+    private fun appendToQueue(uiComponent: UIComponent){
+        val queue = state.value.queue
+        queue.add(uiComponent)
+        _state.value = _state.value.copy(queue = LinkedList()) //To force compose.
+        _state.value = _state.value.copy(queue = queue)
+    }
+    fun removeUiComponent(){
+        val queue = state.value.queue
+        queue.remove()
+        _state.value = _state.value.copy(queue = LinkedList()) //To force compose.
+        _state.value = _state.value.copy(queue = queue)
     }
 
 }

@@ -12,4 +12,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last name</string>
     <string name="register">Register</string>
+    <string name="new_register">You have sucessfully created new account, log in now</string>
+    <string name="app_logo">App Logo</string>
+    <string name="splash_title">KINGDOM CHILD CARE\n</string>
 </resources>

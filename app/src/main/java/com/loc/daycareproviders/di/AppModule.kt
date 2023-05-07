@@ -1,6 +1,8 @@
 package com.loc.daycareproviders.di
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.loc.daycareproviders.data.repository.AuthenticationRepositoryImpl
@@ -18,12 +20,23 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth() = Firebase.auth
+
     @Provides
     @Singleton
-    fun provideAuthenticationRepository(): AuthenticationRepository {
+    fun provideFirebaseFirestore() = Firebase.firestore
+
+    @Provides
+    @Singleton
+    fun provideAuthenticationRepository(
+        firebaseAuth: FirebaseAuth,
+        firebaseFirestore: FirebaseFirestore
+    ): AuthenticationRepository {
         return AuthenticationRepositoryImpl(
-            auth = Firebase.auth,
-            firestore = Firebase.firestore
+            auth = firebaseAuth,
+            firestore = firebaseFirestore
         )
     }
 
