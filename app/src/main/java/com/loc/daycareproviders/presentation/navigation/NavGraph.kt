@@ -28,7 +28,7 @@ fun NavGraph() {
             )
         }
         composable(route = Screen.ChooseAccountScreen.route) {
-            ChooseAccountsScreen(navigate = {route ->
+            ChooseAccountsScreen(navigate = { route ->
                 navController.navigate(route)
             })
         }
@@ -37,14 +37,16 @@ fun NavGraph() {
             arguments = Screen.LoginScreen.arguments
         ) {
             val accountType = it.arguments?.getString("accountType") ?: "Unknown"
-            LoginScreen( navigate = { route ->
+            LoginScreen(navigate = { route ->
                 navController.navigate(route)
             })
         }
         composable(route = Screen.RegisterScreen.route) {
-            RegisterScreen(navigateUp = {
-                navController.navigateUp()
-            })
+            RegisterScreen(
+                navigateUp = {
+                    navController.navigateUp()
+                }
+            )
         }
         composable(route = Screen.HomeScreen.route) {
             HomeScreen()

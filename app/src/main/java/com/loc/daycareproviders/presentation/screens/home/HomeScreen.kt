@@ -12,7 +12,6 @@ fun HomeScreen() {
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(text = "You are logged in")
-
     }
 
 

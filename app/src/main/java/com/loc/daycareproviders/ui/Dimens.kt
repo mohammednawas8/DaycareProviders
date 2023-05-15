@@ -18,4 +18,8 @@ object Dimens {
 
     val ICON_SIZE = 24.dp
 
+    val OPTION_ITEM_SIZE = 170.dp
+
+    val BOTTOM_OPTION_ICON_SIZE = 50.dp
+
 }
