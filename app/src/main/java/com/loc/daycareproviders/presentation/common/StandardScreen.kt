@@ -29,6 +29,7 @@ fun StandardScreen(
             is UIComponent.None -> {
 
             }
+            else -> Unit
         }
     }
     Box {

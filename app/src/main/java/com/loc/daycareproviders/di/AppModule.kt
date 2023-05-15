@@ -6,7 +6,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.loc.daycareproviders.data.repository.AuthenticationRepositoryImpl
+import com.loc.daycareproviders.data.repository.UserRepositoryImpl
 import com.loc.daycareproviders.domain.repository.AuthenticationRepository
+import com.loc.daycareproviders.domain.repository.UserRepository
+import com.loc.daycareproviders.domain.usecases.GetLoggedInUserAccountType
 import com.loc.daycareproviders.domain.usecases.LoginUser
 import com.loc.daycareproviders.domain.usecases.RegisterUser
 import com.loc.daycareproviders.domain.usecases.UseCases
@@ -32,7 +35,7 @@ object AppModule {
     @Singleton
     fun provideAuthenticationRepository(
         firebaseAuth: FirebaseAuth,
-        firebaseFirestore: FirebaseFirestore
+        firebaseFirestore: FirebaseFirestore,
     ): AuthenticationRepository {
         return AuthenticationRepositoryImpl(
             auth = firebaseAuth,
@@ -42,12 +45,21 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideUserRepository(
+        firebaseAuth: FirebaseAuth,
+        firebaseFirestore: FirebaseFirestore,
+    ): UserRepository = UserRepositoryImpl(auth = firebaseAuth, firestore = firebaseFirestore)
+
+    @Provides
+    @Singleton
     fun provideUseCases(
         authenticationRepository: AuthenticationRepository,
+        userRepository: UserRepository,
     ): UseCases {
         return UseCases(
             registerUser = RegisterUser(authenticationRepository),
-            loginUser = LoginUser(authenticationRepository)
+            loginUser = LoginUser(authenticationRepository),
+            getLoggedInUserAccountType = GetLoggedInUserAccountType(userRepository)
         )
     }
 

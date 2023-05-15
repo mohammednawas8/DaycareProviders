@@ -49,4 +49,8 @@ sealed class Screen(
 
     object HomeScreen : Screen(route = "home_screen")
 
+    object StudentScreen : Screen(route = "student_screen")
+    object ParentScreen : Screen(route = "parent_screen")
+    object TeacherScreen : Screen(route = "teacher_screen")
+
 }

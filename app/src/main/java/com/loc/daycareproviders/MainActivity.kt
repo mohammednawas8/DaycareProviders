@@ -3,10 +3,8 @@ package com.loc.daycareproviders
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.loc.daycareproviders.presentation.common.DefaultHomeScreen
 import com.loc.daycareproviders.presentation.navigation.NavGraph
 import com.loc.daycareproviders.ui.theme.DaycareProvidersTheme
-import com.loc.daycareproviders.ui.theme.LightBlue
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

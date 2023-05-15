@@ -18,4 +18,6 @@ val WhitePinkLight = Color(0xFFe1e2ec)
 
 val Orange = Color(0xfff14c0b)
 
-val LightBlue = Color(0xffa9f7f7)
+val LightGreen = Color(0xffa9f7f7)
+val LightPurple = Color(0xff9698f6)
+val LightBlue = Color(0xff96c7f6)

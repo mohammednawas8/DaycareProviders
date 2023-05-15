@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,8 +16,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -34,11 +35,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.loc.daycareproviders.R
 import com.loc.daycareproviders.ui.Dimens
-import com.loc.daycareproviders.ui.theme.LightBlue
+import com.loc.daycareproviders.ui.theme.LightGreen
 import com.loc.daycareproviders.ui.theme.Orange
 
 @Composable
-fun DefaultHomeScreen(
+fun DefaultUserScreen(
     firstButtonText: String,
     secondButtonText: String,
     @DrawableRes firstIcon: Int,
@@ -90,7 +91,7 @@ fun DefaultHomeScreen(
                 .padding(Dimens.EXTRA_SMALL_PADDING),
             horizontalArrangement = Arrangement.SpaceBetween,
 
-        ) {
+            ) {
             BottomOption(
                 icon = R.drawable.logout,
                 text = stringResource(id = R.string.logout),
@@ -143,7 +144,8 @@ fun OptionItem(
             .background(color = backgroundColor), contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {
@@ -194,7 +196,7 @@ fun OptionItem() {
     OptionItem(
         icon = R.drawable.videoconference,
         buttonText = "Add Child info",
-        backgroundColor = LightBlue
+        backgroundColor = LightGreen
     ) {
 
     }
