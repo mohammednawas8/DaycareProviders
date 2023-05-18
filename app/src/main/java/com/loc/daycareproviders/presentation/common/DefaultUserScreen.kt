@@ -67,6 +67,7 @@ fun DefaultUserScreen(
 
         Spacer(modifier = Modifier.height(Dimens.SMALL_PADDING))
 
+
         OptionItem(
             icon = firstIcon,
             buttonText = firstButtonText,
