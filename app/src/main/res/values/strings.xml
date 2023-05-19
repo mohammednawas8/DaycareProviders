@@ -22,4 +22,8 @@
     <string name="my_results">My Results</string>
     <string name="add_hw"><![CDATA[Add HW & QZ]]></string>
     <string name="home_nursery">Home nursery svc</string>
+    <string name="welcome">Welcome "</string>
+    <string name="choose_service">Please choose your desired\nservice:</string>
+    <string name="browse">Browse Daycare Services</string>
+    <string name="button">Button</string>
 </resources>
