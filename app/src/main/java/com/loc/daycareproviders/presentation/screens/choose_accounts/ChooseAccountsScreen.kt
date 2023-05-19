@@ -16,14 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.loc.daycareproviders.R
 import com.loc.daycareproviders.domain.model.AccountType
 import com.loc.daycareproviders.presentation.common.HalfCircle
 import com.loc.daycareproviders.presentation.navigation.Screen
 import com.loc.daycareproviders.ui.Dimens.LARGE_PADDING
-import com.loc.daycareproviders.ui.Dimens.MEDIUM_PADDING
 import com.loc.daycareproviders.ui.theme.Teal
 
 @Composable
@@ -62,32 +59,22 @@ fun ChooseAccountsScreen(
                     .fillMaxWidth(fraction = 0.75f),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                UserOptionItem(
-                    iconId = R.drawable.ic_student,
-                    text = stringResource(id = R.string.student),
+                AccountOption(
+                    iconId = R.drawable.ic_user,
+                    text = stringResource(id = R.string.normal_user),
                     onClick = {
-                        navigate(Screen.LoginScreen.navigate(AccountType.STUDENT.name))
+                        navigate(Screen.LoginScreen.navigate(AccountType.NORMAL_USER.name))
                     }
                 )
 
-                UserOptionItem(
-                    iconId = R.drawable.ic_teacher,
-                    text = stringResource(id = R.string.teacher),
+                AccountOption(
+                    iconId = R.drawable.daycare_provider,
+                    text = stringResource(id = R.string.daycare_provider),
                     onClick = {
-                        navigate(Screen.LoginScreen.navigate(AccountType.TEACHER.name))
+                        navigate(Screen.LoginScreen.navigate(AccountType.DAYCARE_PROVIDER.name))
                     }
                 )
             }
-
-            Spacer(modifier = Modifier.height(MEDIUM_PADDING))
-
-            UserOptionItem(
-                iconId = R.drawable.ic_parent,
-                text = stringResource(id = R.string.parent),
-                onClick = {
-                   navigate(Screen.LoginScreen.navigate(AccountType.PARENT.name))
-                }
-            )
         }
 
     }

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loc.daycareproviders.domain.model.AccountType
 import com.loc.daycareproviders.domain.model.User
+import com.loc.daycareproviders.domain.model.stringToAccountType
 import com.loc.daycareproviders.domain.usecases.UseCases
 import com.loc.daycareproviders.util.DataState
 import com.loc.daycareproviders.util.UIComponent
@@ -42,12 +43,7 @@ class RegisterViewModel @Inject constructor(
         val accountType: String? = savedStateHandle["accountType"]
 
 
-        this.accountType = when (accountType) {
-            "STUDENT" -> AccountType.STUDENT
-            "TEACHER" -> AccountType.TEACHER
-            "PARENT" -> AccountType.PARENT
-            else -> AccountType.STUDENT
-        }
+        this.accountType = stringToAccountType(accountType)
 
     }
 

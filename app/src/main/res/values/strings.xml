@@ -15,6 +15,8 @@
     <string name="new_register">You have sucessfully created new account, log in now</string>
     <string name="app_logo">App Logo</string>
     <string name="splash_title">KINGDOM CHILD CARE\n</string>
+    <string name="normal_user">Normal User</string>
+    <string name="daycare_provider">Daycare Provider</string>
     <string name="background">Background Image</string>
     <string name="logout">Log out</string>
     <string name="tools">Tools</string>
