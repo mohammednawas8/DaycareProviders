@@ -22,7 +22,8 @@ class AuthenticationRepositoryImpl(
             if (authResult.user == null) {
                 return@withContext null
             }
-            firestore.collection(USER_COLLECTION).document().set(user).await()
+
+            firestore.collection(USER_COLLECTION).document(authResult.user!!.uid).set(user).await()
             return@withContext user
         }
     }
