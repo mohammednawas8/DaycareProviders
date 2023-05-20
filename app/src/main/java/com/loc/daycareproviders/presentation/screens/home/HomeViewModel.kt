@@ -32,21 +32,25 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getLoggedInAccountType() {
-        useCases.getLoggedInUserAccountType().onEach { dataState ->
+        useCases.getLoggedInUser().onEach { dataState ->
             when (dataState) {
                 is DataState.Loading -> _state.value =
                     _state.value.copy(isLoading = dataState.isLoading)
 
                 is DataState.Success -> {
-                    val accountType = dataState.data
+                    val user = dataState.data
+                    val accountType = user.accountType
+
                     viewModelScope.launch {
-                        when(accountType){
-                            AccountType.NORMAL_USER ->{
-                                _navigation.emit(Screen.NormalUserScreen.route)
+                        when (accountType) {
+                            AccountType.NORMAL_USER -> {
+                                _navigation.emit(Screen.NormalUserScreen.navigate(name = "${user.firstName} ${user.lastName}"))
                             }
-                            AccountType.DAYCARE_PROVIDER->{
-                                _navigation.emit(Screen.DaycareProviderScreen.route)
+
+                            AccountType.DAYCARE_PROVIDER -> {
+                                _navigation.emit(Screen.DaycareProviderScreen.navigate(name = "${user.firstName} ${user.lastName}"))
                             }
+
                             else -> {
                                 _state.value = _state.value.copy(error = "Unknown Error")
                             }
@@ -62,6 +66,10 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun logout() {
+
     }
 
 }

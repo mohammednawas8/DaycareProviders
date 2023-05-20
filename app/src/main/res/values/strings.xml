@@ -30,4 +30,8 @@
     <string name="button">Button</string>
     <string name="add_service">Add daycare service</string>
     <string name="direct_messages">Direct Messages</string>
+    <string name="add_images">Add Images</string>
+    <string name="add_description">Add description</string>
+    <string name="add_price">Add Price</string>
+    <string name="publish_service">Publish Service</string>
 </resources>

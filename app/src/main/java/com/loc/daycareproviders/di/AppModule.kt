@@ -9,8 +9,9 @@ import com.loc.daycareproviders.data.repository.AuthenticationRepositoryImpl
 import com.loc.daycareproviders.data.repository.UserRepositoryImpl
 import com.loc.daycareproviders.domain.repository.AuthenticationRepository
 import com.loc.daycareproviders.domain.repository.UserRepository
-import com.loc.daycareproviders.domain.usecases.GetLoggedInUserAccountType
+import com.loc.daycareproviders.domain.usecases.GetLoggedInUser
 import com.loc.daycareproviders.domain.usecases.LoginUser
+import com.loc.daycareproviders.domain.usecases.LogoutUser
 import com.loc.daycareproviders.domain.usecases.RegisterUser
 import com.loc.daycareproviders.domain.usecases.UseCases
 import dagger.Module
@@ -59,7 +60,8 @@ object AppModule {
         return UseCases(
             registerUser = RegisterUser(authenticationRepository),
             loginUser = LoginUser(authenticationRepository),
-            getLoggedInUserAccountType = GetLoggedInUserAccountType(userRepository)
+            getLoggedInUser = GetLoggedInUser(userRepository),
+            logoutUser = LogoutUser(authenticationRepository)
         )
     }
 

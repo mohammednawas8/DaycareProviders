@@ -16,7 +16,6 @@ class UserRepositoryImpl(
     override suspend fun getLoggedInUser(): User {
         val uid = auth.currentUser?.uid ?: throw Exception("Unknown error")
 
-        Log.d("tesst",uid)
 
         return firestore
             .collection(Constants.USER_COLLECTION)

@@ -50,6 +50,8 @@ fun DefaultUserScreen(
     @DrawableRes secondIcon: Int,
     onFirstButtonClick: () -> Unit,
     onSecondButtonClick: () -> Unit,
+    onLogoutClick: () -> Unit,
+    onToolsClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -117,13 +119,13 @@ fun DefaultUserScreen(
                 .padding(bottom = SMALL_PADDING), horizontalArrangement = Arrangement.SpaceBetween
         ) {
             DefaultUserButton(
-                onClick = { },
+                onClick = onLogoutClick,
                 buttonColor = Blue.copy(alpha = 0.8f),
                 buttonText = stringResource(id = R.string.logout)
             )
 
             DefaultUserButton(
-                onClick = { },
+                onClick = onToolsClick,
                 buttonColor = Blue.copy(alpha = 0.8f),
                 buttonText = stringResource(id = R.string.tools)
             )
@@ -224,9 +226,10 @@ fun DefaultUserScreenPreview() {
         secondOptionText = stringResource(id = R.string.browse),
         firstIcon = R.drawable.videoconference,
         secondIcon = R.drawable.videoconference,
-        onFirstButtonClick = { /*TODO*/ }) {
-
-    }
+        onFirstButtonClick = { /*TODO*/ },
+        onLogoutClick = {},
+        onToolsClick = {},
+        onSecondButtonClick = {})
 }
 
 @Preview(showBackground = true)

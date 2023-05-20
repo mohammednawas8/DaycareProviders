@@ -24,4 +24,6 @@ object Dimens {
 
     val USER_OPTION_BORDER = 5.dp
 
+    val SERVICE_FEATURE_CARD_SIZE = 200.dp
+
 }

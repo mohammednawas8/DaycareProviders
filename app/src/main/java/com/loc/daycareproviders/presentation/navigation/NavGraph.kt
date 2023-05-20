@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.loc.daycareproviders.presentation.screens.add_daycare_service.AddDaycareService
 import com.loc.daycareproviders.presentation.screens.choose_accounts.ChooseAccountsScreen
 import com.loc.daycareproviders.presentation.screens.daycare_provider.DaycareProviderScreen
 import com.loc.daycareproviders.presentation.screens.home.HomeScreen
@@ -36,7 +37,6 @@ fun NavGraph() {
             route = Screen.LoginScreen.route,
             arguments = Screen.LoginScreen.arguments
         ) {
-            val accountType = it.arguments?.getString("accountType") ?: "Unknown"
             LoginScreen(navigate = { route ->
                 navController.navigate(route)
             })
@@ -51,19 +51,42 @@ fun NavGraph() {
         composable(route = Screen.HomeScreen.route) {
             HomeScreen(
                 navigate = { route ->
-                    navController.popBackStack()
-                    navController.navigate(route)
+                    navController.navigate(route){
+                        popUpTo(0){
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
 
-        composable(route = Screen.NormalUserScreen.route){
+        composable(
+            route = Screen.NormalUserScreen.route,
+            arguments = Screen.NormalUserScreen.arguments
+        ) {
             NormalUserScreen()
         }
 
-        composable(route = Screen.DaycareProviderScreen.route){
-            DaycareProviderScreen()
+        composable(
+            route = Screen.DaycareProviderScreen.route,
+            arguments = Screen.DaycareProviderScreen.arguments
+        ) {
+            DaycareProviderScreen(
+                navigate = { route ->
+                    if (route == Screen.SplashScreen.route) {
+                        navController.navigate(route) {
+                            popUpTo(0) {
+                                inclusive = true
+                            }
+                        }
+                    } else {
+                        navController.navigate(route)
+                    }
+                })
+        }
+
+        composable(route = Screen.AddDaycareServiceScreen.route) {
+            AddDaycareService()
         }
     }
-
 }

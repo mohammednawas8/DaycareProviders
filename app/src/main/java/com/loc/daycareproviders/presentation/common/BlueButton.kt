@@ -24,13 +24,15 @@ fun BlueButton(
     Button(
         modifier = modifier,
         onClick = onClick,
-        content = { Text(text = text, fontSize = MaterialTheme.typography.bodyMedium.fontSize) },
+        content = {
+            Text(text = text, fontSize = MaterialTheme.typography.bodyMedium.fontSize,)
+                  },
         colors = ButtonDefaults.buttonColors(
             containerColor = Blue,
             contentColor = Color.White
         ),
         shape = RoundedCornerShape(size = ROUNDED_CORNER),
-        enabled = enabled
+        enabled = enabled,
     )
 }
 

@@ -20,6 +20,12 @@ fun NormalUserScreen() {
         },
         onSecondButtonClick = {
 
+        },
+        onLogoutClick = {
+
+        },
+        onToolsClick = {
+
         }
     )
 }

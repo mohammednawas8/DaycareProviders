@@ -23,8 +23,8 @@ sealed class Screen(
                 }
             )
         )
-    ){
-        fun navigate(arg: String): String{
+    ) {
+        fun navigate(arg: String): String {
             return "login_screen/$arg"
         }
     }
@@ -40,8 +40,8 @@ sealed class Screen(
                 }
             )
         )
-    ){
-        fun navigate(arg: String): String{
+    ) {
+        fun navigate(arg: String): String {
             return "register_screen/$arg"
         }
     }
@@ -49,7 +49,35 @@ sealed class Screen(
 
     object HomeScreen : Screen(route = "home_screen")
 
-    object NormalUserScreen : Screen(route = "normal_user_screen")
-    object DaycareProviderScreen : Screen(route = "daycare_provider_screen")
+    object NormalUserScreen : Screen(
+        route = "normal_user_screen/{name}", arguments = listOf(
+            navArgument(
+                name = "name"
+            ) {
+                type = NavType.StringType
+                nullable = false
+            }
+        )
+    ) {
+        fun navigate(name: String): String {
+            return "normal_user_screen/$name"
+        }
+    }
+
+    object DaycareProviderScreen : Screen(route = "daycare_provider_screen/{name}", arguments = listOf(
+        navArgument(
+            name = "name"
+        ) {
+            type = NavType.StringType
+            nullable = false
+        }
+    )
+    ) {
+        fun navigate(name: String): String {
+            return "daycare_provider_screen/$name"
+        }
+    }
+
+    object AddDaycareServiceScreen: Screen(route = "add_daycare_service_screen")
 
 }
