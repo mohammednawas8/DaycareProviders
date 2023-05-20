@@ -1,9 +1,9 @@
 package com.loc.daycareproviders.domain.repository
 
-import com.loc.daycareproviders.domain.model.AccountType
+import com.loc.daycareproviders.domain.model.User
 
 interface UserRepository {
 
-    suspend fun getAccountTypeForLoggedInUser(): AccountType
+    suspend fun getLoggedInUser(): User
 
 }

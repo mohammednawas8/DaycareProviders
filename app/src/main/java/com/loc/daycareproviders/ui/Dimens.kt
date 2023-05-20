@@ -22,6 +22,6 @@ object Dimens {
 
     val BOTTOM_OPTION_ICON_SIZE = 50.dp
 
-    val USER_OPTION_BORDER = 2.dp
+    val USER_OPTION_BORDER = 5.dp
 
 }

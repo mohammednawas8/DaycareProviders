@@ -41,14 +41,11 @@ class HomeViewModel @Inject constructor(
                     val accountType = dataState.data
                     viewModelScope.launch {
                         when(accountType){
-                            AccountType.STUDENT ->{
-                                _navigation.emit(Screen.StudentScreen.route)
+                            AccountType.NORMAL_USER ->{
+                                _navigation.emit(Screen.NormalUserScreen.route)
                             }
-                            AccountType.TEACHER->{
-                                _navigation.emit(Screen.TeacherScreen.route)
-                            }
-                            AccountType.PARENT ->{
-                                _navigation.emit(Screen.ParentScreen.route)
+                            AccountType.DAYCARE_PROVIDER->{
+                                _navigation.emit(Screen.DaycareProviderScreen.route)
                             }
                             else -> {
                                 _state.value = _state.value.copy(error = "Unknown Error")

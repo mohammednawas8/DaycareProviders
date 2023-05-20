@@ -5,8 +5,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.loc.daycareproviders.presentation.screens.choose_accounts.ChooseAccountsScreen
+import com.loc.daycareproviders.presentation.screens.daycare_provider.DaycareProviderScreen
 import com.loc.daycareproviders.presentation.screens.home.HomeScreen
 import com.loc.daycareproviders.presentation.screens.login.LoginScreen
+import com.loc.daycareproviders.presentation.screens.normal_user.NormalUserScreen
 import com.loc.daycareproviders.presentation.screens.register.RegisterScreen
 import com.loc.daycareproviders.presentation.screens.splash.SplashScreen
 
@@ -53,6 +55,14 @@ fun NavGraph() {
                     navController.navigate(route)
                 }
             )
+        }
+
+        composable(route = Screen.NormalUserScreen.route){
+            NormalUserScreen()
+        }
+
+        composable(route = Screen.DaycareProviderScreen.route){
+            DaycareProviderScreen()
         }
     }
 

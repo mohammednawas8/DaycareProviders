@@ -16,7 +16,7 @@ class GetLoggedInUserAccountType(
         return flow {
             emit(DataState.Loading(isLoading = true))
             try {
-                val accountType = userRepository.getAccountTypeForLoggedInUser()
+                val accountType = userRepository.getLoggedInUser().accountType
                 if (accountType == AccountType.UNKNOWN) {
                     emit(
                         DataState.Response(

@@ -28,4 +28,6 @@
     <string name="choose_service">Please choose your desired\nservice:</string>
     <string name="browse">Browse Daycare Services</string>
     <string name="button">Button</string>
+    <string name="add_service">Add daycare service</string>
+    <string name="direct_messages">Direct Messages</string>
 </resources>

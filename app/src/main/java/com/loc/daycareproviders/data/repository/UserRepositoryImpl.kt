@@ -1,5 +1,6 @@
 package com.loc.daycareproviders.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.loc.daycareproviders.domain.model.AccountType
@@ -12,16 +13,17 @@ class UserRepositoryImpl(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ) : UserRepository {
-    override suspend fun getAccountTypeForLoggedInUser(): AccountType {
-        val email = auth.currentUser?.email ?: return AccountType.UNKNOWN
+    override suspend fun getLoggedInUser(): User {
+        val uid = auth.currentUser?.uid ?: throw Exception("Unknown error")
+
+        Log.d("tesst",uid)
 
         return firestore
             .collection(Constants.USER_COLLECTION)
-            .whereEqualTo("email", email)
+            .document(uid)
             .get()
             .await()
-            .toObjects(User::class.java)
-            .singleOrNull()?.accountType ?: AccountType.UNKNOWN
+            .toObject(User::class.java) ?: throw Exception("Unknown error")
     }
 
 }
