@@ -34,4 +34,9 @@
     <string name="add_description">Add description</string>
     <string name="add_price">Add Price</string>
     <string name="publish_service">Publish Service</string>
+    <string name="cancel">Cancel</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="done">Done</string>
+    <string name="currency">Currency</string>
 </resources>

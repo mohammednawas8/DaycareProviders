@@ -16,8 +16,4 @@ val Blue = Color(0xFF1644C6)
 
 val WhitePinkLight = Color(0xFFe1e2ec)
 
-val Orange = Color(0xfff14c0b)
-
-val LightGreen = Color(0xffa9f7f7)
-val LightPurple = Color(0xff9698f6)
-val LightBlue = Color(0xff96c7f6)
+val Gray = Color.Gray.copy(alpha = 0.2f)

@@ -1,9 +1,5 @@
 package com.loc.daycareproviders.presentation.screens.add_daycare_service
 
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,20 +8,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,15 +25,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.loc.daycareproviders.R
 import com.loc.daycareproviders.presentation.common.BlueButton
+import com.loc.daycareproviders.presentation.common.ServiceFeatureCard
 import com.loc.daycareproviders.ui.Dimens.MEDIUM_PADDING
-import com.loc.daycareproviders.ui.Dimens.ROUNDED_CORNER
 import com.loc.daycareproviders.ui.Dimens.SERVICE_FEATURE_CARD_SIZE
 import com.loc.daycareproviders.ui.Dimens.SMALL_PADDING
-import com.loc.daycareproviders.ui.Dimens.USER_OPTION_BORDER
 import com.loc.daycareproviders.ui.theme.Blue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 
 @Composable
 fun AddDaycareService() {
+
+    var addImagesDialog by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    var descriptionDialog by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    var priceDialog by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,7 +87,7 @@ fun AddDaycareService() {
                     .height(SERVICE_FEATURE_CARD_SIZE),
                 icon = R.drawable.add,
                 text = stringResource(id = R.string.add_images),
-                onClick = {/*TODO: Pick Images*/ },
+                onClick = { addImagesDialog = true },
             )
 
             Row(
@@ -96,7 +102,7 @@ fun AddDaycareService() {
                         .height(SERVICE_FEATURE_CARD_SIZE),
                     icon = R.drawable.document,
                     text = stringResource(id = R.string.add_description),
-                    onClick = {/*TODO: Pick Images*/ },
+                    onClick = { descriptionDialog = true },
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 ServiceFeatureCard(
@@ -105,7 +111,7 @@ fun AddDaycareService() {
                         .height(SERVICE_FEATURE_CARD_SIZE),
                     icon = R.drawable.price_tag,
                     text = stringResource(id = R.string.add_price),
-                    onClick = {/*TODO: Pick Images*/ },
+                    onClick = { priceDialog = true },
                 )
             }
 
@@ -120,49 +126,33 @@ fun AddDaycareService() {
         )
 
     }
-}
 
-@Composable
-fun ServiceFeatureCard(
-    modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
-    text: String,
-    onClick: () -> Unit,
-) {
-
-    Column(
-        modifier = modifier
-            .size(0.dp) //In case this is called without this size it will cover the entire parent's size because we using weight = 1
-            .clip(RoundedCornerShape(ROUNDED_CORNER))
-            .background(Color.Gray.copy(alpha = 0.2f))
-            .border(
-                width = 2.dp,
-                color = Color.Black.copy(alpha = 0.7f),
-                shape = RoundedCornerShape(ROUNDED_CORNER)
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Image(
-            painter = painterResource(id = icon),
-            contentDescription = null,
-            modifier = Modifier
-                .weight(1f)
-                .padding(all = SMALL_PADDING)
+    if (addImagesDialog) {
+        AddImagesDialog(
+            onCameraClick = { /*TODO: Launch the camera*/ },
+            onGalleryClick = { /*TODO: Launch the gallery*/ },
+            onDismiss = { addImagesDialog = false }
         )
-
-
-
-        BlueButton(
-            text = text,
-            onClick = onClick,
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .padding(bottom = SMALL_PADDING)
-        )
-
     }
 
+    if (descriptionDialog) {
+        AddDescriptionDialog(
+            onDismiss = { descriptionDialog = false },
+            onDoneClick = { description ->
+                /*TODO: save the description in the viewModel*/
+            }
+        )
+    }
+
+    if (priceDialog) {
+        AddPriceDialog(onDismiss = {
+            priceDialog = false
+        },
+            onDoneClick = { price, currency ->
+                /*TODO: save the price in the viewModel*/
+            }
+        )
+    }
 }
 
 @Preview(showBackground = true)

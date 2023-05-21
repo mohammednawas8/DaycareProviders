@@ -19,7 +19,7 @@ fun NavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route
+        startDestination = Screen.AddDaycareServiceScreen.route
     ) {
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(navigate = { route ->
