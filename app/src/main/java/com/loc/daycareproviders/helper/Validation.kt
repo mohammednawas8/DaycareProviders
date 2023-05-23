@@ -2,6 +2,7 @@ package com.loc.daycareproviders.helper
 
 import android.util.Log
 import android.util.Patterns
+import com.loc.daycareproviders.util.UIComponent
 
 
 fun validateEmail(email: String): ValidationResult {
@@ -18,26 +19,26 @@ fun validateEmail(email: String): ValidationResult {
 }
 
 fun validateFirstName(name: String): ValidationResult {
-   return if (name.isEmpty()){
+    return if (name.isEmpty()) {
         ValidationResult(
             isValid = false,
             message = "First name cannot be empty"
         )
-    }else{
-       ValidationResult(
-           isValid = true,
-           message = null
-       )
-   }
+    } else {
+        ValidationResult(
+            isValid = true,
+            message = null
+        )
+    }
 }
 
 fun validateLastName(name: String): ValidationResult {
-    return if (name.isEmpty()){
+    return if (name.isEmpty()) {
         ValidationResult(
             isValid = false,
             message = "Last name cannot be empty"
         )
-    }else{
+    } else {
         ValidationResult(
             isValid = true,
             message = null
@@ -56,6 +57,61 @@ fun validatePassword(password: String): ValidationResult {
         isValid = true,
         message = null
     )
+}
+
+fun validateImages(images: List<ByteArray>): ValidationResult {
+    if (images.isEmpty()) {
+        return ValidationResult(
+            isValid = false,
+            message = "Select one image at least"
+        )
+    }
+    return ValidationResult(
+        isValid = true,
+        message = null
+    )
+}
+
+fun validateDescription(description: String): ValidationResult {
+    return if (description.isEmpty()) {
+        ValidationResult(
+            isValid = false,
+            message = "Add description"
+        )
+    } else {
+        ValidationResult(
+            isValid = true,
+            message = null
+        )
+    }
+}
+
+fun validatePrice(price: Double): ValidationResult {
+    return if (price == 0.0) {
+        ValidationResult(
+            isValid = false,
+            message = "Add price"
+        )
+    } else {
+        ValidationResult(
+            isValid = true,
+            message = null
+        )
+    }
+}
+
+fun validateCurrency(currency: String): ValidationResult {
+    return if (currency.isBlank()) {
+        ValidationResult(
+            isValid = false,
+            message = "Add currency"
+        )
+    } else {
+        ValidationResult(
+            isValid = true,
+            message = null
+        )
+    }
 }
 
 data class ValidationResult(

@@ -4,5 +4,6 @@ data class UseCases(
     val registerUser: RegisterUser,
     val loginUser: LoginUser,
     val getLoggedInUser: GetLoggedInUser,
-    val logoutUser: LogoutUser
+    val logoutUser: LogoutUser,
+    val publishDaycareService: PublishDaycareService
 )

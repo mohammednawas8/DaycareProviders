@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.loc.daycareproviders.presentation.screens.add_daycare_service.AddDaycareService
+import com.loc.daycareproviders.presentation.screens.add_daycare_service.AddDaycareServiceScreen
 import com.loc.daycareproviders.presentation.screens.choose_accounts.ChooseAccountsScreen
 import com.loc.daycareproviders.presentation.screens.daycare_provider.DaycareProviderScreen
 import com.loc.daycareproviders.presentation.screens.home.HomeScreen
@@ -86,7 +86,7 @@ fun NavGraph() {
         }
 
         composable(route = Screen.AddDaycareServiceScreen.route) {
-            AddDaycareService()
+            AddDaycareServiceScreen()
         }
     }
 }
