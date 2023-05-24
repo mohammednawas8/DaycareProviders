@@ -8,4 +8,7 @@ data class AddDaycareServiceState(
     val isLoading: Boolean = false,
     val selectedImagesCount: Int = 0,
     val queue: Queue<UIComponent> = LinkedList(),
+    val description: String = "",
+    val price: Double? = null,
+    val currency: String = ""
 )

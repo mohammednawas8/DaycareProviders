@@ -44,19 +44,18 @@ import com.loc.daycareproviders.ui.theme.Gray
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
 fun AddServiceDialog(
     modifier: Modifier = Modifier,
-    onDismiss: () -> Unit,
+    onCancel: () -> Unit,
     content: @Composable () -> Unit,
 ) {
 
     Dialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = onCancel,
         properties = DialogProperties(dismissOnClickOutside = false)
     ) {
 
@@ -67,7 +66,7 @@ fun AddServiceDialog(
                 .background(color = Color.Transparent)
         ) {
             Column {
-                BlueButton(text = stringResource(id = R.string.cancel), onClick = onDismiss)
+                BlueButton(text = stringResource(id = R.string.cancel), onClick = onCancel)
                 Spacer(modifier = Modifier.height(5.dp))
                 Card(
                     modifier = Modifier.fillMaxSize(),
@@ -87,9 +86,9 @@ fun AddServiceDialog(
 fun AddImagesDialog(
     onCameraClick: () -> Unit,
     onGalleryClick: () -> Unit,
-    onDismiss: () -> Unit,
+    onCancel: () -> Unit,
 ) {
-    AddServiceDialog(onDismiss = onDismiss) {
+    AddServiceDialog(onCancel = onCancel) {
         Row(
             modifier = Modifier
                 .fillMaxSize(),
@@ -131,22 +130,21 @@ fun AddImagesDialog(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddDescriptionDialog(
-    onDismiss: () -> Unit,
-    onDoneClick: (String) -> Unit,
+    description: String,
+    onTextChange: (String) -> Unit,
+    onCancel: () -> Unit,
+    onDone: () -> Unit,
 ) {
 
-    var text by rememberSaveable {
-        mutableStateOf("")
-    }
-    AddServiceDialog(onDismiss = onDismiss) {
+    AddServiceDialog(onCancel = onCancel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = SMALL_PADDING)
         ) {
             OutlinedTextField(
-                value = text,
-                onValueChange = { text = it },
+                value = description,
+                onValueChange = onTextChange,
                 placeholder = {
                     Text(text = stringResource(id = R.string.add_description) + "...")
                 },
@@ -161,7 +159,7 @@ fun AddDescriptionDialog(
             )
             BlueButton(
                 text = stringResource(id = R.string.done),
-                onClick = { onDoneClick(text) },
+                onClick = onDone,
                 modifier = Modifier.align(CenterHorizontally)
             )
         }
@@ -171,15 +169,13 @@ fun AddDescriptionDialog(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddPriceDialog(
-    onDismiss: () -> Unit,
-    onDoneClick: (price: Double, currency: String) -> Unit,
+    price: Double?,
+    currency: String,
+    onPriceChange: (Double) -> Unit,
+    onCurrencyChange: (String) -> Unit,
+    onCancel: () -> Unit,
+    onDoneClick: () -> Unit,
 ) {
-    var price by rememberSaveable {
-        mutableStateOf("")
-    }
-    var selectedCurrency by rememberSaveable {
-        mutableStateOf("")
-    }
 
     var isMenuExpanded by rememberSaveable {
         mutableStateOf(false)
@@ -189,17 +185,15 @@ fun AddPriceDialog(
         listOf("SAR", "USD")
     }
 
-    AddServiceDialog(onDismiss = onDismiss) {
+    AddServiceDialog(onCancel = onCancel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = SMALL_PADDING)
         ) {
             OutlinedTextField(
-                value = price,
-                onValueChange = {
-                    price = it
-                },
+                value = price?.toString() ?: "",
+                onValueChange = { onPriceChange(it.toDouble()) },
                 shape = RoundedCornerShape(size = ROUNDED_CORNER),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 label = {
@@ -219,7 +213,7 @@ fun AddPriceDialog(
                 }
             ) {
                 OutlinedTextField(
-                    value = selectedCurrency,
+                    value = currency,
                     onValueChange = {},
                     readOnly = true,
                     placeholder = { Text(text = stringResource(id = R.string.currency)) },
@@ -238,7 +232,7 @@ fun AddPriceDialog(
                         DropdownMenuItem(
                             text = { Text(text = currency) },
                             onClick = {
-                                selectedCurrency = currency
+                                onCurrencyChange(currency)
                                 isMenuExpanded = false
                             }
                         )
@@ -249,9 +243,7 @@ fun AddPriceDialog(
             BlueButton(
                 text = stringResource(id = R.string.done),
                 onClick = {
-                    if (price == "")
-                        return@BlueButton
-                    onDoneClick(price.toDouble(), selectedCurrency)
+                    onDoneClick()
                 },
                 modifier = Modifier.align(CenterHorizontally)
             )
@@ -263,7 +255,7 @@ fun AddPriceDialog(
 @Preview
 @Composable
 fun AddServiceDialogPreview() {
-    AddServiceDialog(onDismiss = {}, content = {
+    AddServiceDialog(onCancel = {}, content = {
         Row() {
         }
     }
@@ -281,11 +273,20 @@ fun AddImagesDialogPreview() {
 @Preview
 @Composable
 fun AddDescriptionDialogPreview() {
-    AddDescriptionDialog(onDismiss = {}, onDoneClick = {})
+    AddDescriptionDialog(description = "", onTextChange = {}, onCancel = { /*TODO*/ }) {
+
+    }
 }
 
 @Preview
 @Composable
 fun AddPriceDialogPreview() {
-    AddPriceDialog(onDismiss = { /*TODO*/ }, onDoneClick = { _, _ -> })
+    AddPriceDialog(
+        price = null,
+        currency = "USD",
+        onPriceChange = {},
+        onCurrencyChange = {},
+        onCancel = { /*TODO*/ }) {
+
+    }
 }

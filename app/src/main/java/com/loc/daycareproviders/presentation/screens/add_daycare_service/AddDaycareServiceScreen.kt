@@ -115,7 +115,7 @@ fun AddDaycareServiceScreen(
                         .fillMaxWidth()
                         .height(SERVICE_FEATURE_CARD_SIZE),
                     icon = R.drawable.add,
-                    text = stringResource(id = R.string.add_images),
+                    text = "${stringResource(id = R.string.add_images)} (${state.selectedImagesCount})",
                     onClick = { addImagesDialog = true },
                 )
 
@@ -168,26 +168,36 @@ fun AddDaycareServiceScreen(
             AddImagesDialog(
                 onCameraClick = { cameraLauncher.launch(null) },
                 onGalleryClick = { galleryLauncher.launch("image/*") },
-                onDismiss = { addImagesDialog = false }
+                onCancel = { addImagesDialog = false }
             )
         }
 
         if (descriptionDialog) {
             AddDescriptionDialog(
-                onDismiss = { descriptionDialog = false },
-                onDoneClick = { description ->
-                    viewModel.saveDescription(description)
+                description = state.description,
+                onTextChange = viewModel::changeDescription,
+                onCancel = {
+                    viewModel.changeDescription("")
+                    descriptionDialog = false
+                },
+                onDone = {
                     descriptionDialog = false
                 }
             )
         }
 
         if (priceDialog) {
-            AddPriceDialog(onDismiss = {
-                priceDialog = false
-            },
-                onDoneClick = { price, currency ->
-                    viewModel.savePrice(price, currency)
+            AddPriceDialog(
+                price = state.price,
+                currency = state.currency,
+                onPriceChange = viewModel::changePrice,
+                onCurrencyChange = viewModel::changeCurrency,
+                onCancel = {
+                    viewModel.changePrice(null)
+                    viewModel.changeCurrency("")
+                    priceDialog = false
+                },
+                onDoneClick = {
                     priceDialog = false
                 }
             )

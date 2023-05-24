@@ -22,21 +22,13 @@ import java.io.InputStream
 import java.util.LinkedList
 import javax.inject.Inject
 
-/*
-* TODO: Save the state of the dialogs in the ViewModel
-* */
-
 @HiltViewModel
 class AddDaycareServiceViewModel @Inject constructor(
     private val useCases: UseCases,
     private val contentResolver: ContentResolver,
 ) : ViewModel() {
+
     private val selectedImages = mutableListOf<ByteArray>()
-
-    private var description = ""
-
-    private var price = 0.0
-    private var currency = ""
 
     private val _state = mutableStateOf(AddDaycareServiceState())
     val state: State<AddDaycareServiceState> = _state
@@ -99,21 +91,30 @@ class AddDaycareServiceViewModel @Inject constructor(
         return byteArrayOutputStream.toByteArray()
     }
 
-    fun saveDescription(description: String) {
-        this.description = description
+    fun changeDescription(description: String) {
+        _state.value = state.value.copy(
+            description = description
+        )
     }
 
-    fun savePrice(price: Double, currency: String) {
-        this.price = price
-        this.currency = currency
+    fun changePrice(price: Double?) {
+        _state.value = state.value.copy(
+            price = price
+        )
+    }
+
+    fun changeCurrency(currency: String) {
+        _state.value = state.value.copy(
+            currency = currency
+        )
     }
 
     fun publishService() {
         useCases.publishDaycareService(
             images = selectedImages,
-            description = description,
-            price = price,
-            currency = currency
+            description = state.value.description,
+            price = state.value.price ?: 0.0,
+            currency = state.value.currency
         ).onEach { dataState ->
             when (dataState) {
                 is DataState.Loading -> _state.value =
@@ -135,7 +136,6 @@ class AddDaycareServiceViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
 
 
     private fun appendToQueue(uiComponent: UIComponent) {

@@ -19,17 +19,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             DaycareProvidersTheme {
                 NavGraph()
-//                DefaultHomeScreen(
-//                    firstButtonText = "Add Child info",
-//                    secondButtonText = "My results",
-//                    firstIcon = R.drawable.videoconference,
-//                    secondIcon = R.drawable.results,
-//                    backgroundColor = LightBlue,
-//                    onFirstButtonClick = { /*TODO*/ },
-//                    onSecondButtonClick = { /*TODO*/ },
-//                    onLogoutClick = { /*TODO*/ }) {
-//
-//                }
             }
         }
     }
