@@ -1,9 +1,9 @@
 package com.loc.daycareproviders.presentation.screens.splash
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
+import com.loc.daycareproviders.presentation.navigation.Feature
 import com.loc.daycareproviders.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,9 +24,9 @@ class SplashViewModel @Inject constructor(
 
             val firebaseUser = auth.currentUser
             if (firebaseUser == null) {
-                _navigate.emit(Screen.ChooseAccountScreen.route)
+                _navigate.emit(Feature.Authentication.route)
             } else {
-                _navigate.emit(Screen.HomeScreen.route)
+                _navigate.emit(Feature.Home.route)
             }
         }
     }

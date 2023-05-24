@@ -1,6 +1,5 @@
 package com.loc.daycareproviders.presentation.screens.splash
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,12 +18,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.loc.daycareproviders.R
 import com.loc.daycareproviders.presentation.common.HalfCircle
-import com.loc.daycareproviders.presentation.navigation.Screen
 import com.loc.daycareproviders.ui.Dimens.SMALL_PADDING
 import com.loc.daycareproviders.ui.theme.Blue
 import com.loc.daycareproviders.ui.theme.Teal
