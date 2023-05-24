@@ -58,50 +58,51 @@ fun NavGraph() {
         navigation(
             startDestination = Screen.HomeScreen.route,
             route = Feature.Home.route
-        ){
-        composable(route = Screen.HomeScreen.route) {
-            HomeScreen(
-                navigate = { route ->
-                    navController.navigate(route) {
-                        popUpTo(0) {
-                            inclusive = true
-                        }
-                    }
-                }
-            )
-        }
-
-        composable(
-            route = Screen.NormalUserScreen.route,
-            arguments = Screen.NormalUserScreen.arguments
         ) {
-            NormalUserScreen()
-        }
-
-        composable(
-            route = Screen.DaycareProviderScreen.route,
-            arguments = Screen.DaycareProviderScreen.arguments
-        ) {
-            DaycareProviderScreen(
-                navigate = { route ->
-                    if (route == Screen.SplashScreen.route) {
+            composable(route = Screen.HomeScreen.route) {
+                HomeScreen(
+                    navigate = { route ->
                         navController.navigate(route) {
                             popUpTo(0) {
                                 inclusive = true
                             }
                         }
-                    } else {
-                        navController.navigate(route)
                     }
-                })
-        }
+                )
+            }
 
-        composable(route = Screen.AddDaycareServiceScreen.route) {
-            AddDaycareServiceScreen(
-                navigateUp = {
-                    navController.navigateUp()
-                }
-            )
+            composable(
+                route = Screen.NormalUserScreen.route,
+                arguments = Screen.NormalUserScreen.arguments
+            ) {
+                NormalUserScreen()
+            }
+
+            composable(
+                route = Screen.DaycareProviderScreen.route,
+                arguments = Screen.DaycareProviderScreen.arguments
+            ) {
+                DaycareProviderScreen(
+                    navigate = { route ->
+                        if (route == Screen.SplashScreen.route) {
+                            navController.navigate(route) {
+                                popUpTo(0) {
+                                    inclusive = true
+                                }
+                            }
+                        } else {
+                            navController.navigate(route)
+                        }
+                    })
+            }
+
+            composable(route = Screen.AddDaycareServiceScreen.route) {
+                AddDaycareServiceScreen(
+                    navigateUp = {
+                        navController.navigateUp()
+                    }
+                )
+            }
         }
     }
 }
