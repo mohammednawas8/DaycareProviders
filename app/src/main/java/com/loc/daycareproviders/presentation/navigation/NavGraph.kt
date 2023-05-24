@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.loc.daycareproviders.presentation.screens.add_daycare_service.AddDaycareServiceScreen
+import androidx.navigation.navigation
 import com.loc.daycareproviders.presentation.screens.choose_accounts.ChooseAccountsScreen
 import com.loc.daycareproviders.presentation.screens.daycare_provider.DaycareProviderScreen
 import com.loc.daycareproviders.presentation.screens.home.HomeScreen
@@ -28,26 +29,36 @@ fun NavGraph() {
             }
             )
         }
-        composable(route = Screen.ChooseAccountScreen.route) {
-            ChooseAccountsScreen(navigate = { route ->
-                navController.navigate(route)
-            })
-        }
-        composable(
-            route = Screen.LoginScreen.route,
-            arguments = Screen.LoginScreen.arguments
+        //Authentication sub-graph
+        navigation(
+            startDestination = Screen.ChooseAccountScreen.route,
+            route = Feature.Authentication.route
         ) {
-            LoginScreen(navigate = { route ->
-                navController.navigate(route)
-            })
-        }
-        composable(route = Screen.RegisterScreen.route) {
-            RegisterScreen(
-                navigateUp = {
+            composable(route = Screen.ChooseAccountScreen.route) {
+                ChooseAccountsScreen(navigate = { route ->
+                    navController.navigate(route)
+                })
+            }
+            composable(
+                route = Screen.LoginScreen.route,
+                arguments = Screen.LoginScreen.arguments
+            ) {
+                LoginScreen(navigate = { route ->
+                    navController.navigate(route)
+                })
+            }
+            composable(route = Screen.RegisterScreen.route) {
+                RegisterScreen(navigateUp = {
                     navController.navigateUp()
-                }
-            )
+                })
+            }
         }
+
+        //Home sub-graph
+        navigation(
+            startDestination = Screen.HomeScreen.route,
+            route = Feature.Home.route
+        ){
         composable(route = Screen.HomeScreen.route) {
             HomeScreen(
                 navigate = { route ->

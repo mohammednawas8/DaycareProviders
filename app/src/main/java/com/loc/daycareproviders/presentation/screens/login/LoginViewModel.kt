@@ -1,6 +1,5 @@
 package com.loc.daycareproviders.presentation.screens.login
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
