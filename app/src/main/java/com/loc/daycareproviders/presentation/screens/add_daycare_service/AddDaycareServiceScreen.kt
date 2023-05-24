@@ -17,6 +17,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -42,6 +43,7 @@ import com.loc.daycareproviders.presentation.common.StandardScreen
 @Composable
 fun AddDaycareServiceScreen(
     viewModel: AddDaycareServiceViewModel = hiltViewModel(),
+    navigateUp: () -> Unit,
 ) {
 
     val state = viewModel.state.value
@@ -56,6 +58,12 @@ fun AddDaycareServiceScreen(
 
     var priceDialog by rememberSaveable {
         mutableStateOf(false)
+    }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.navigation.collect {
+            navigateUp()
+        }
     }
 
     val cameraLauncher = rememberLauncherForActivityResult(
@@ -209,7 +217,7 @@ fun AddDaycareServiceScreen(
 @Preview(showBackground = true, widthDp = 200, heightDp = 400)
 @Composable
 fun AddDaycareServicePreview() {
-    AddDaycareServiceScreen()
+    AddDaycareServiceScreen(navigateUp = {})
 }
 
 @Preview(showBackground = true)

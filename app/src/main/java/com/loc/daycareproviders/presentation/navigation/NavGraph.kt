@@ -51,8 +51,8 @@ fun NavGraph() {
         composable(route = Screen.HomeScreen.route) {
             HomeScreen(
                 navigate = { route ->
-                    navController.navigate(route){
-                        popUpTo(0){
+                    navController.navigate(route) {
+                        popUpTo(0) {
                             inclusive = true
                         }
                     }
@@ -86,7 +86,11 @@ fun NavGraph() {
         }
 
         composable(route = Screen.AddDaycareServiceScreen.route) {
-            AddDaycareServiceScreen()
+            AddDaycareServiceScreen(
+                navigateUp = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

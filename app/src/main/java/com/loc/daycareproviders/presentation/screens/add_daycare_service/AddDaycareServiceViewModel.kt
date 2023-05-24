@@ -14,6 +14,8 @@ import com.loc.daycareproviders.presentation.navigation.Screen
 import com.loc.daycareproviders.util.DataState
 import com.loc.daycareproviders.util.UIComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -33,6 +35,8 @@ class AddDaycareServiceViewModel @Inject constructor(
     private val _state = mutableStateOf(AddDaycareServiceState())
     val state: State<AddDaycareServiceState> = _state
 
+    private val _navigation = MutableSharedFlow<Unit>()
+    val navigation = _navigation.asSharedFlow()
 
     fun takePicture(bmp: Bitmap?) {
         bmp?.let {
@@ -85,7 +89,7 @@ class AddDaycareServiceViewModel @Inject constructor(
 
     private fun getBmpByteArray(bmp: Bitmap): ByteArray? {
         val byteArrayOutputStream = ByteArrayOutputStream()
-        if (!bmp.compress(Bitmap.CompressFormat.JPEG, 99, byteArrayOutputStream)) {
+        if (!bmp.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream)) {
             return null
         }
         return byteArrayOutputStream.toByteArray()
@@ -127,6 +131,7 @@ class AddDaycareServiceViewModel @Inject constructor(
                                 message = "your service has been published"
                             )
                         )
+                        _navigation.emit(Unit)
                     }
                 }
 
