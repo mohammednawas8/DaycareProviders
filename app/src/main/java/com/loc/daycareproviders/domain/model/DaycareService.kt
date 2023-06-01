@@ -5,6 +5,8 @@ data class DaycareService(
     val description: String = "",
     val price: Double = 0.0,
     val currency: String = "",
+    val providerName: String = "",
+    val serviceId: String = "",
     val userUid: String = ""
 
 )

@@ -12,4 +12,6 @@ interface DaycareServiceRepository {
         images: List<ByteArray>,
     ): List<String>
 
+    suspend fun getDaycareServices(limit: Long): List<DaycareService>
+
 }

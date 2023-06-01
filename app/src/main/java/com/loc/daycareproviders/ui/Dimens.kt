@@ -26,4 +26,6 @@ object Dimens {
 
     val SERVICE_FEATURE_CARD_SIZE = 200.dp
 
+    val DAYCARE_CARD_BORDER = 2.dp
+
 }

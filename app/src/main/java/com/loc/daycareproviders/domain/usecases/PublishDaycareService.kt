@@ -2,6 +2,7 @@ package com.loc.daycareproviders.domain.usecases
 
 import com.loc.daycareproviders.domain.model.DaycareService
 import com.loc.daycareproviders.domain.repository.DaycareServiceRepository
+import com.loc.daycareproviders.domain.repository.UserRepository
 import com.loc.daycareproviders.helper.validateCurrency
 import com.loc.daycareproviders.helper.validateDescription
 import com.loc.daycareproviders.helper.validateImages
@@ -11,9 +12,11 @@ import com.loc.daycareproviders.util.UIComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
+import java.util.UUID
 
 class PublishDaycareService(
     private val daycareServiceRepository: DaycareServiceRepository,
+    private val userRepository: UserRepository,
 ) {
 
     operator fun invoke(
@@ -31,11 +34,15 @@ class PublishDaycareService(
                 val currencyValidation = validateCurrency(currency)
                 if (imagesValidation.isValid && descriptionValidation.isValid && priceValidation.isValid && currencyValidation.isValid) {
                     val imageUrls = daycareServiceRepository.uploadImages(images = images)
+                    val user = userRepository.getLoggedInUser()
+                    val serviceId = UUID.fromString("${user.email} ${imageUrls[0]}").toString() //Create unique id for the service
                     val service = DaycareService(
                         images = imageUrls,
                         description = description,
                         price = price,
+                        providerName = "${user.firstName} ${user.lastName}",
                         currency = currency,
+                        serviceId = serviceId
                     )
                     val serviceWithUserUID = daycareServiceRepository.publishService(service)
                     emit(DataState.Success(serviceWithUserUID))

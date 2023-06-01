@@ -74,7 +74,7 @@ object AppModule {
             loginUser = LoginUser(authenticationRepository),
             getLoggedInUser = GetLoggedInUser(userRepository),
             logoutUser = LogoutUser(authenticationRepository),
-            publishDaycareService = PublishDaycareService(daycareServiceRepository)
+            publishDaycareService = PublishDaycareService(daycareServiceRepository,userRepository)
         )
     }
 

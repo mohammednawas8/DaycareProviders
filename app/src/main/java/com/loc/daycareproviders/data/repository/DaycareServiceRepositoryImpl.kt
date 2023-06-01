@@ -2,20 +2,15 @@ package com.loc.daycareproviders.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.loc.daycareproviders.domain.model.DaycareService
 import com.loc.daycareproviders.domain.repository.DaycareServiceRepository
-import com.loc.daycareproviders.util.Constants
 import com.loc.daycareproviders.util.Constants.DAYCARE_SERVICES
 import com.loc.daycareproviders.util.Constants.SERVICE_IMAGES_PATH
-import com.loc.daycareproviders.util.Constants.USER_COLLECTION
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -46,5 +41,11 @@ class DaycareServiceRepositoryImpl(
             }
             imagesList.awaitAll()
         }
+    }
+
+    override suspend fun getDaycareServices(limit: Long): List<DaycareService> {
+        return firestore.collection(DAYCARE_SERVICES).limit(limit).get().await().toObjects(
+            DaycareService::class.java
+        )
     }
 }

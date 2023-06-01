@@ -39,4 +39,7 @@
     <string name="gallery">Gallery</string>
     <string name="done">Done</string>
     <string name="currency">Currency</string>
+    <string name="details">Details</string>
+    <string name="price">Price</string>
+    <string name="daycare_services">Daycare Services</string>
 </resources>

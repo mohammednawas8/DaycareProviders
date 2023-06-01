@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
 import com.loc.daycareproviders.presentation.navigation.NavGraph
+import com.loc.daycareproviders.presentation.screens.browse_daycare_services.BrowseDaycareServicesScreen
 import com.loc.daycareproviders.ui.theme.DaycareProvidersTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.async
@@ -18,7 +19,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DaycareProvidersTheme {
-                NavGraph()
+//                NavGraph()
+                BrowseDaycareServicesScreen()
             }
         }
     }
