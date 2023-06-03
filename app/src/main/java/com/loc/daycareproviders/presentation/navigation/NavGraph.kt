@@ -1,13 +1,16 @@
 package com.loc.daycareproviders.presentation.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.loc.daycareproviders.presentation.screens.add_daycare_service.AddDaycareServiceScreen
 import androidx.navigation.navigation
+import com.loc.daycareproviders.presentation.screens.browse_daycare_services.BrowseDaycareServicesScreen
 import com.loc.daycareproviders.presentation.screens.choose_accounts.ChooseAccountsScreen
 import com.loc.daycareproviders.presentation.screens.daycare_provider.DaycareProviderScreen
+import com.loc.daycareproviders.presentation.screens.daycare_service_details.DaycareServiceDetailsScreen
 import com.loc.daycareproviders.presentation.screens.home.HomeScreen
 import com.loc.daycareproviders.presentation.screens.login.LoginScreen
 import com.loc.daycareproviders.presentation.screens.normal_user.NormalUserScreen
@@ -75,7 +78,11 @@ fun NavGraph() {
                 route = Screen.NormalUserScreen.route,
                 arguments = Screen.NormalUserScreen.arguments
             ) {
-                NormalUserScreen()
+                NormalUserScreen(
+                    navigate = { route ->
+                        navController.navigate(route = route)
+                    }
+                )
             }
 
             composable(
@@ -98,6 +105,26 @@ fun NavGraph() {
 
             composable(route = Screen.AddDaycareServiceScreen.route) {
                 AddDaycareServiceScreen(
+                    navigateUp = {
+                        navController.navigateUp()
+                    }
+                )
+            }
+
+            composable(route = Screen.BrowseServicesScreen.route) {
+                BrowseDaycareServicesScreen(
+                    navigate = { route ->
+                        Log.d("Test",route)
+                        navController.navigate(route = route)
+                    }
+                )
+            }
+
+            composable(
+                route = Screen.DaycareServiceDetails.route,
+                arguments = Screen.DaycareServiceDetails.arguments
+            ) {
+                DaycareServiceDetailsScreen(
                     navigateUp = {
                         navController.navigateUp()
                     }

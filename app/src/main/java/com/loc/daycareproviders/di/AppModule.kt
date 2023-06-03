@@ -15,6 +15,7 @@ import com.loc.daycareproviders.data.repository.UserRepositoryImpl
 import com.loc.daycareproviders.domain.repository.AuthenticationRepository
 import com.loc.daycareproviders.domain.repository.DaycareServiceRepository
 import com.loc.daycareproviders.domain.repository.UserRepository
+import com.loc.daycareproviders.domain.usecases.GetDaycareService
 import com.loc.daycareproviders.domain.usecases.GetLoggedInUser
 import com.loc.daycareproviders.domain.usecases.LoginUser
 import com.loc.daycareproviders.domain.usecases.LogoutUser
@@ -67,14 +68,15 @@ object AppModule {
     fun provideUseCases(
         authenticationRepository: AuthenticationRepository,
         userRepository: UserRepository,
-        daycareServiceRepository: DaycareServiceRepository
+        daycareServiceRepository: DaycareServiceRepository,
     ): UseCases {
         return UseCases(
             registerUser = RegisterUser(authenticationRepository),
             loginUser = LoginUser(authenticationRepository),
             getLoggedInUser = GetLoggedInUser(userRepository),
             logoutUser = LogoutUser(authenticationRepository),
-            publishDaycareService = PublishDaycareService(daycareServiceRepository,userRepository)
+            publishDaycareService = PublishDaycareService(daycareServiceRepository, userRepository),
+            getDaycareService = GetDaycareService(daycareServiceRepository)
         )
     }
 
@@ -82,9 +84,9 @@ object AppModule {
     @Provides
     fun provideDaycareServiceRepository(
         firestore: FirebaseFirestore,
-        auth:FirebaseAuth,
-        storage:StorageReference
-    ):DaycareServiceRepository{
+        auth: FirebaseAuth,
+        storage: StorageReference,
+    ): DaycareServiceRepository {
         return DaycareServiceRepositoryImpl(
             firestore, auth, storage
         )

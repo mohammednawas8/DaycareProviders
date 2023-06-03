@@ -1,5 +1,9 @@
 package com.loc.daycareproviders.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class DaycareService(
     val images: List<String> = emptyList(),
     val description: String = "",
@@ -7,6 +11,5 @@ data class DaycareService(
     val currency: String = "",
     val providerName: String = "",
     val serviceId: String = "",
-    val userUid: String = ""
-
-)
+    val userUid: String = "",
+) : Parcelable

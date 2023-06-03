@@ -1,4 +1,4 @@
-package com.loc.daycareproviders.presentation.screens.daycare_provider
+package com.loc.daycareproviders.presentation.common
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loc.daycareproviders.domain.usecases.UseCases
 import com.loc.daycareproviders.presentation.navigation.Screen
+import com.loc.daycareproviders.presentation.screens.daycare_provider.DaycareProviderState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DaycareProviderViewModel @Inject constructor(
+class UserOptionsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val userCases: UseCases,
 ) : ViewModel() {

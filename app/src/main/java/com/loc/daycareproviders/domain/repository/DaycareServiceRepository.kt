@@ -14,4 +14,6 @@ interface DaycareServiceRepository {
 
     suspend fun getDaycareServices(limit: Long): List<DaycareService>
 
+    suspend fun getDaycareService(serviceId: String): DaycareService?
+
 }

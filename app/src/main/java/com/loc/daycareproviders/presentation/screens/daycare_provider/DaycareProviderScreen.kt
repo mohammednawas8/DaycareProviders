@@ -6,11 +6,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.loc.daycareproviders.R
 import com.loc.daycareproviders.presentation.common.DefaultUserScreen
+import com.loc.daycareproviders.presentation.common.UserOptionsViewModel
 import com.loc.daycareproviders.presentation.navigation.Screen
 
 @Composable
 fun DaycareProviderScreen(
-    viewModel: DaycareProviderViewModel = hiltViewModel(),
+    viewModel: UserOptionsViewModel = hiltViewModel(),
     navigate: (String) -> Unit,
 ) {
 

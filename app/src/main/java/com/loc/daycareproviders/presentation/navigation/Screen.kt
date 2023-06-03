@@ -64,20 +64,33 @@ sealed class Screen(
         }
     }
 
-    object DaycareProviderScreen : Screen(route = "daycare_provider_screen/{name}", arguments = listOf(
-        navArgument(
-            name = "name"
+    object DaycareProviderScreen :
+        Screen(route = "daycare_provider_screen/{name}", arguments = listOf(
+            navArgument(
+                name = "name"
+            ) {
+                type = NavType.StringType
+                nullable = false
+            }
+        )
         ) {
-            type = NavType.StringType
-            nullable = false
-        }
-    )
-    ) {
         fun navigate(name: String): String {
             return "daycare_provider_screen/$name"
         }
     }
 
-    object AddDaycareServiceScreen: Screen(route = "add_daycare_service_screen")
-
+    object AddDaycareServiceScreen : Screen(route = "add_daycare_service_screen")
+    object BrowseServicesScreen : Screen(route = "browse_daycare_service")
+    object DaycareServiceDetails : Screen(
+        route = "daycare_service_details/{serviceId}",
+        arguments = listOf(
+            navArgument(name = "serviceId") {
+                type = NavType.StringType
+                nullable = false
+            })
+    ) {
+        fun navigate(serviceId: String): String {
+            return "daycare_service_details/$serviceId"
+        }
+    }
 }

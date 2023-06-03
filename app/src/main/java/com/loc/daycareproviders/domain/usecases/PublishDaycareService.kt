@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import java.util.UUID
+import kotlin.random.Random
 
 class PublishDaycareService(
     private val daycareServiceRepository: DaycareServiceRepository,
@@ -35,7 +36,9 @@ class PublishDaycareService(
                 if (imagesValidation.isValid && descriptionValidation.isValid && priceValidation.isValid && currencyValidation.isValid) {
                     val imageUrls = daycareServiceRepository.uploadImages(images = images)
                     val user = userRepository.getLoggedInUser()
-                    val serviceId = UUID.fromString("${user.email} ${imageUrls[0]}").toString() //Create unique id for the service
+                    val serviceId =
+                        UUID.randomUUID().toString() + Random.nextInt(from = 1, until = 1000)
+                            .toString() //Create unique id for the service
                     val service = DaycareService(
                         images = imageUrls,
                         description = description,

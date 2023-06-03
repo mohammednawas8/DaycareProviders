@@ -48,4 +48,12 @@ class DaycareServiceRepositoryImpl(
             DaycareService::class.java
         )
     }
+
+    override suspend fun getDaycareService(serviceId: String): DaycareService? {
+        val daycareService =
+            firestore.collection(DAYCARE_SERVICES).whereEqualTo("serviceId", serviceId).get()
+                .await()
+                .toObjects(DaycareService::class.java)
+        return daycareService.singleOrNull()
+    }
 }
