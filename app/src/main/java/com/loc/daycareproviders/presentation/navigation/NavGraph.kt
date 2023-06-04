@@ -80,7 +80,15 @@ fun NavGraph() {
             ) {
                 NormalUserScreen(
                     navigate = { route ->
-                        navController.navigate(route = route)
+                        if (route == Screen.SplashScreen.route) {
+                            navController.navigate(route) {
+                                popUpTo(0) {
+                                    inclusive = true
+                                }
+                            }
+                        } else {
+                            navController.navigate(route)
+                        }
                     }
                 )
             }
@@ -100,7 +108,8 @@ fun NavGraph() {
                         } else {
                             navController.navigate(route)
                         }
-                    })
+                    }
+                )
             }
 
             composable(route = Screen.AddDaycareServiceScreen.route) {
@@ -114,7 +123,7 @@ fun NavGraph() {
             composable(route = Screen.BrowseServicesScreen.route) {
                 BrowseDaycareServicesScreen(
                     navigate = { route ->
-                        Log.d("Test",route)
+                        Log.d("Test", route)
                         navController.navigate(route = route)
                     }
                 )

@@ -1,6 +1,7 @@
 package com.loc.daycareproviders.presentation.screens.normal_user
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.loc.daycareproviders.R
@@ -15,6 +16,12 @@ fun NormalUserScreen(
 ) {
 
     val state = viewModel.state.value
+
+    LaunchedEffect(key1 = viewModel.navigation) {
+        viewModel.navigation.collect {
+            navigate(it)
+        }
+    }
 
     DefaultUserScreen(
         username = state.name,

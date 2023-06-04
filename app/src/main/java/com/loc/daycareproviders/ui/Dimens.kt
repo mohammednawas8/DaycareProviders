@@ -28,4 +28,5 @@ object Dimens {
 
     val DAYCARE_CARD_BORDER = 2.dp
 
+    val CHATTING_TOP_APPBAR_ELEVATION = 5.dp
 }

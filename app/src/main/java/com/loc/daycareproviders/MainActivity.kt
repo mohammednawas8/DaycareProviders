@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.loc.daycareproviders.presentation.navigation.NavGraph
+import com.loc.daycareproviders.presentation.screens.chatting.ChattingScreen
 import com.loc.daycareproviders.ui.theme.DaycareProvidersTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,9 +15,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DaycareProvidersTheme {
-                NavGraph()
+//                NavGraph()
 //                BrowseDaycareServicesScreen()
 //               DaycareServiceDetails()
+                ChattingScreen()
             }
         }
     }
