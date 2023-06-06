@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,6 +29,9 @@ import com.loc.daycareproviders.presentation.common.ChattingTopAppBar
 import com.loc.daycareproviders.presentation.screens.login.StandardTextField
 import com.loc.daycareproviders.ui.Dimens.SMALL_PADDING
 import com.loc.daycareproviders.ui.theme.Blue
+import com.loc.daycareproviders.ui.theme.Gray
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -36,8 +40,9 @@ fun ChattingScreen(
     viewModel: ChattingViewModel = hiltViewModel(),
     navigateUp:() -> Unit
 ) {
-
-    val keyboard = LocalSoftwareKeyboardController.current
+    val simpleDateFormat = remember {
+        SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    }
     val state = viewModel.state.value
     if (state.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -60,17 +65,22 @@ fun ChattingScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                reverseLayout = false,
+                reverseLayout = true,
                 contentPadding = PaddingValues(all = SMALL_PADDING),
                 verticalArrangement = Arrangement.spacedBy(2.dp, alignment = Alignment.Bottom)
             ) {
-                items(state.messages) { message ->
+                items(
+                    items = state.messages,
+                ) { message ->
+
+
                     Box(modifier = Modifier.fillMaxWidth()) {
                         ChattingMessageCard(
                             chattingMessage = message.chattingMessage,
-                            backgroundColor = Blue,
+                            backgroundColor = if (message.alignment == Alignment.BottomEnd) Blue else Gray,
                             modifier = Modifier.align(message.alignment),
-                            textColor = Color.White
+                            textColor = if (message.alignment == Alignment.BottomEnd) Color.White else Color.Black,
+                            simpleDateFormat = simpleDateFormat
                         )
                     }
                 }

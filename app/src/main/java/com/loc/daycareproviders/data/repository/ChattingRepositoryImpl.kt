@@ -2,7 +2,10 @@ package com.loc.daycareproviders.data.repository
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
 import com.loc.daycareproviders.domain.model.ChattingMessage
 import com.loc.daycareproviders.domain.model.Conversation
 import com.loc.daycareproviders.domain.repository.ChattingRepository
@@ -63,8 +66,13 @@ class ChattingRepositoryImpl(
     }
 
     override suspend fun sendMessage(chattingMessage: ChattingMessage, conversationId: String) {
-        firestore.collection(CONVERSATION_COLLECTION).document(conversationId)
-            .collection(MESSAGES_COLLECTION).document().set(chattingMessage).await()
+        val ref = firestore.collection(CONVERSATION_COLLECTION).document(conversationId)
+            .collection(MESSAGES_COLLECTION).document()
+        val map = mutableMapOf<String,Any>()
+        map["text"] = chattingMessage.text
+        map["senderUid"] = chattingMessage.senderUid
+        map["timestamp"] = FieldValue.serverTimestamp()
+        ref.set(map).await()
     }
 
     override fun subscribeToMessages(
@@ -74,14 +82,16 @@ class ChattingRepositoryImpl(
         onError: (e: Exception) -> Unit,
     ) {
         firestore.collection(CONVERSATION_COLLECTION).document(conversationId)
-            .collection(MESSAGES_COLLECTION).limit(limit)
+            .collection(MESSAGES_COLLECTION)
+            .orderBy("timestamp")
+            .limit(limit)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     onError(error)
                 } else {
                     val messages = value?.toObjects(ChattingMessage::class.java)
                     messages?.let {
-                        onSuccess(messages)
+                        onSuccess(it.reversed())
                     }
                 }
             }

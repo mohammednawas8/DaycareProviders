@@ -29,8 +29,8 @@ fun DaycareProviderScreen(
         secondButtonText = stringResource(id = R.string.button),
         firstOptionText = stringResource(id = R.string.add_service),
         secondOptionText = stringResource(id = R.string.direct_messages),
-        firstIcon = R.drawable.videoconference,
-        secondIcon = R.drawable.videoconference,
+        firstIcon = R.drawable.add_service,
+        secondIcon = R.drawable.message,
         onFirstButtonClick = {
             navigate(Screen.AddDaycareServiceScreen.route)
         },

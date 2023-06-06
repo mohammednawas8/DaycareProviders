@@ -29,8 +29,8 @@ fun NormalUserScreen(
         secondButtonText = stringResource(id = R.string.button),
         firstOptionText = stringResource(id = R.string.browse),
         secondOptionText = stringResource(id = R.string.direct_messages),
-        firstIcon = R.drawable.videoconference,
-        secondIcon = R.drawable.videoconference,
+        firstIcon = R.drawable.browse,
+        secondIcon = R.drawable.message,
         onFirstButtonClick = {
             navigate(Screen.BrowseServicesScreen.route)
         },

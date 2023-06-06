@@ -3,6 +3,8 @@ package com.loc.daycareproviders.domain.usecases
 import com.loc.daycareproviders.domain.model.ChattingMessage
 import com.loc.daycareproviders.domain.repository.ChattingRepository
 import com.loc.daycareproviders.util.UIComponent
+import java.time.ZoneId
+import java.util.Date
 
 class FetchMessages(
     private val chattingRepository: ChattingRepository,
@@ -21,6 +23,13 @@ class FetchMessages(
                 conversationId = conversationId,
                 limit = limit,
                 onSuccess = { chattingMessages ->
+//                    val messagesWithTheUserTime = chattingMessages.map {
+//                        val userLocalDate =
+//                            it.timestamp?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()
+//                        val userDate = Date.from(
+//                            userLocalDate?.atStartOfDay(ZoneId.systemDefault())?.toInstant()
+//                        ) ?: it.timestamp
+//                    }
                     onSuccess(chattingMessages)
                     onLoading(false)
                 },

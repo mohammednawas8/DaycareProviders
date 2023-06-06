@@ -6,19 +6,18 @@ import androidx.compose.ui.Alignment
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.ktx.Firebase
 import com.loc.daycareproviders.domain.model.ChattingMessage
 import com.loc.daycareproviders.domain.usecases.UseCases
-import com.loc.daycareproviders.presentation.navigation.Screen
 import com.loc.daycareproviders.util.DataState
 import com.loc.daycareproviders.util.UIComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.util.Date
 import java.util.LinkedList
 import javax.inject.Inject
 
@@ -88,11 +87,9 @@ class ChattingViewModel @Inject constructor(
     }
 
     fun sendMessage() {
-        val date = LocalDateTime.now()
         val chattingMessage = ChattingMessage(
             text = state.value.message,
-            date = "${date.dayOfMonth}/${date.month}/${date.year} ${date.dayOfWeek.name} ${date.hour}:${date.minute}",
-            senderUid = Firebase.auth.uid!!
+            senderUid = Firebase.auth.uid!!,
         )
         conversationId?.let {
             useCases.sendChattingMessage(

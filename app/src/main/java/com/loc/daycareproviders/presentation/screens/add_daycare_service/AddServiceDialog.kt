@@ -265,7 +265,7 @@ fun AddServiceDialogPreview() {
 @Preview
 @Composable
 fun AddImagesDialogPreview() {
-    AddImagesDialog(onCameraClick = { /*TODO*/ }, onGalleryClick = { /*TODO*/ }) {
+    AddImagesDialog(onCameraClick = {  }, onGalleryClick = {  }) {
 
     }
 }
@@ -273,7 +273,7 @@ fun AddImagesDialogPreview() {
 @Preview
 @Composable
 fun AddDescriptionDialogPreview() {
-    AddDescriptionDialog(description = "", onTextChange = {}, onCancel = { /*TODO*/ }) {
+    AddDescriptionDialog(description = "", onTextChange = {}, onCancel = {  }) {
 
     }
 }
@@ -286,7 +286,7 @@ fun AddPriceDialogPreview() {
         currency = "USD",
         onPriceChange = {},
         onCurrencyChange = {},
-        onCancel = { /*TODO*/ }) {
+        onCancel = {  }) {
 
     }
 }

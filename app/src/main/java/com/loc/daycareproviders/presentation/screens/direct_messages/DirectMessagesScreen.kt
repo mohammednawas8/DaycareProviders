@@ -1,6 +1,5 @@
 package com.loc.daycareproviders.presentation.screens.direct_messages
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +37,7 @@ fun DirectMessagesScreen(
 ) {
 
     val conversations = viewModel.converastions.collectAsLazyPagingItems()
+    val result = handlePagingResult(items = conversations)
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -46,11 +46,15 @@ fun DirectMessagesScreen(
                 text = stringResource(id = R.string.direct_messages),
                 onBackClick = navigateUp
             )
-        }
+        },
+        containerColor = Color.White,
+        contentColor = Color.Unspecified
     ) {
         val topPadding = it.calculateTopPadding()
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(top = topPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = topPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING),
             contentPadding = PaddingValues(all = SMALL_PADDING)

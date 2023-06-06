@@ -219,7 +219,7 @@ fun DefaultUserScreenPreview() {
         secondOptionText = stringResource(id = R.string.browse),
         firstIcon = R.drawable.videoconference,
         secondIcon = R.drawable.videoconference,
-        onFirstButtonClick = { /*TODO*/ },
+        onFirstButtonClick = {  },
         onLogoutClick = {},
         onSecondButtonClick = {})
 }

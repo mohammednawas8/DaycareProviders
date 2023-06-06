@@ -23,32 +23,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.loc.daycareproviders.ui.Dimens.SMALL_PADDING
 import com.loc.daycareproviders.ui.theme.Gray
-import java.time.LocalDateTime
+import java.text.SimpleDateFormat
 
 @Composable
 fun ChattingMessageCard(
     modifier: Modifier = Modifier,
     chattingMessage: ChattingMessage,
     backgroundColor: Color,
-    textColor: Color
+    simpleDateFormat: SimpleDateFormat,
+    textColor: Color,
 ) {
 
     var isDateVisible by remember {
         mutableStateOf(false)
     }
 
+    val rememberDateAsString = remember {
+        chattingMessage.timestamp?.let { simpleDateFormat.format(it) }
+    } ?: ""
+
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(ROUNDED_CORNER))
             .background(color = backgroundColor)
             .clickable { isDateVisible = !isDateVisible }
-            .animateContentSize()
     ) {
         Column(modifier = Modifier.padding(all = SMALL_PADDING)) {
-            Text(text = chattingMessage.text, fontSize = 16.sp,color = textColor)
-            AnimatedVisibility(visible = isDateVisible) {
-                Text(text = chattingMessage.date, fontSize = 12.sp, color = textColor.copy(alpha = 0.7f))
-            }
+            Text(text = chattingMessage.text, fontSize = 16.sp, color = textColor)
+//            AnimatedVisibility(visible = isDateVisible) {
+//                Text(text = rememberDateAsString, color = textColor.copy(alpha = 0.6f))
+//            }
         }
     }
 
@@ -58,9 +62,10 @@ fun ChattingMessageCard(
 @Composable
 fun ChattingMessageCardPreview() {
     ChattingMessageCard(
-        chattingMessage = ChattingMessage("Hi, I have a question","06/05/2023 Monday 11:30"),
+        chattingMessage = ChattingMessage("Hi, I have a question", "06/05/2023 Monday 11:30"),
         backgroundColor = Gray,
-        textColor = Color.Black
+        textColor = Color.Black,
+        simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     )
 }
 
