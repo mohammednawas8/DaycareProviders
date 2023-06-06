@@ -35,11 +35,9 @@ fun NormalUserScreen(
             navigate(Screen.BrowseServicesScreen.route)
         },
         onSecondButtonClick = {
-
+            navigate(Screen.DirectMessages.route)
         },
         onLogoutClick = viewModel::logout,
-        onToolsClick = {
 
-        }
     )
 }

@@ -12,6 +12,7 @@ import com.loc.daycareproviders.presentation.screens.chatting.ChattingScreen
 import com.loc.daycareproviders.presentation.screens.choose_accounts.ChooseAccountsScreen
 import com.loc.daycareproviders.presentation.screens.daycare_provider.DaycareProviderScreen
 import com.loc.daycareproviders.presentation.screens.daycare_service_details.DaycareServiceDetailsScreen
+import com.loc.daycareproviders.presentation.screens.direct_messages.DirectMessagesScreen
 import com.loc.daycareproviders.presentation.screens.home.HomeScreen
 import com.loc.daycareproviders.presentation.screens.login.LoginScreen
 import com.loc.daycareproviders.presentation.screens.normal_user.NormalUserScreen
@@ -152,6 +153,13 @@ fun NavGraph() {
                     navigateUp = {
                         navController.navigateUp()
                     }
+                )
+            }
+
+            composable(route = Screen.DirectMessages.route) {
+                DirectMessagesScreen(
+                    navigateUp = navController::navigateUp,
+                    navigate = navController::navigate
                 )
             }
         }

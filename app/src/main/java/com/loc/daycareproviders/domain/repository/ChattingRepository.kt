@@ -20,4 +20,6 @@ interface ChattingRepository {
     suspend fun getMessages(conversationId: String, limit: Long): List<ChattingMessage>
 
     suspend fun checkForConversation(conversation: Conversation): String?
+
+    suspend fun getConversations(limit: Long): List<Conversation>
 }

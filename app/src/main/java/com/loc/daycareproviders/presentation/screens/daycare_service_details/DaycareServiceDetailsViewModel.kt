@@ -68,7 +68,8 @@ class DaycareServiceDetailsViewModel @Inject constructor(
     fun contactWithProvider() {
         val conversation = Conversation(
             firstUserUid = Firebase.auth.uid.toString(),
-            secondUserUid = state.value.daycareService?.userUid.toString()
+            secondUserUid = state.value.daycareService?.userUid.toString(),
+            receiverName = _state.value.daycareService?.providerName ?: ""
         )
         useCases.createNewConversation.invoke(conversation = conversation).onEach { dataState ->
             when (dataState) {

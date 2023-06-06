@@ -51,7 +51,6 @@ fun DefaultUserScreen(
     onFirstButtonClick: () -> Unit,
     onSecondButtonClick: () -> Unit,
     onLogoutClick: () -> Unit,
-    onToolsClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -122,12 +121,6 @@ fun DefaultUserScreen(
                 onClick = onLogoutClick,
                 buttonColor = Blue.copy(alpha = 0.8f),
                 buttonText = stringResource(id = R.string.logout)
-            )
-
-            DefaultUserButton(
-                onClick = onToolsClick,
-                buttonColor = Blue.copy(alpha = 0.8f),
-                buttonText = stringResource(id = R.string.tools)
             )
 
         }
@@ -228,7 +221,6 @@ fun DefaultUserScreenPreview() {
         secondIcon = R.drawable.videoconference,
         onFirstButtonClick = { /*TODO*/ },
         onLogoutClick = {},
-        onToolsClick = {},
         onSecondButtonClick = {})
 }
 

@@ -32,19 +32,20 @@ class ChattingRepositoryImpl(
             val usersConversation: MutableList<Deferred<Unit>> = mutableListOf()
             val document =
                 firestore.collection(CONVERSATION_COLLECTION).document()
-            document.set(conversation).await()
+            val conversationWithId = conversation.copy(conversationId = document.id)
+            document.set(conversationWithId).await()
 
             val firstUserConversation = async {
                 createConversationForUser(
                     userUid = conversation.firstUserUid,
-                    conversationId = document.id
+                    conversation = conversationWithId
                 )
             }
 
             val secondUserConversation = async {
                 createConversationForUser(
                     userUid = conversation.secondUserUid,
-                    conversationId = document.id
+                    conversation = conversationWithId
                 )
             }
             usersConversation.add(firstUserConversation)
@@ -53,6 +54,12 @@ class ChattingRepositoryImpl(
             document.id
         }
 
+    }
+
+    override suspend fun getConversations(limit: Long): List<Conversation> {
+        return firestore.collection(USER_COLLECTION).document(auth.uid!!).collection(
+            CONVERSATION_COLLECTION
+        ).limit(limit).get().await().toObjects(Conversation::class.java)
     }
 
     override suspend fun sendMessage(chattingMessage: ChattingMessage, conversationId: String) {
@@ -104,8 +111,8 @@ class ChattingRepositoryImpl(
         else case1 ?: case2
     }
 
-    private suspend fun createConversationForUser(userUid: String, conversationId: String) {
+    private suspend fun createConversationForUser(conversation: Conversation, userUid: String) {
         firestore.collection(USER_COLLECTION).document(userUid).collection(CONVERSATION_COLLECTION)
-            .document().set(mapOf("conversationId" to conversationId)).await()
+            .document().set(conversation).await()
     }
 }

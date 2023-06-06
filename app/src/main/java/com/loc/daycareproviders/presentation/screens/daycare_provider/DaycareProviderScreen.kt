@@ -35,13 +35,11 @@ fun DaycareProviderScreen(
             navigate(Screen.AddDaycareServiceScreen.route)
         },
         onSecondButtonClick = {
-
+            navigate(Screen.DirectMessages.route)
         },
         onLogoutClick = {
             viewModel.logout()
         },
-        onToolsClick = {
 
-        }
     )
 }

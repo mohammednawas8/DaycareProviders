@@ -109,8 +109,10 @@ sealed class Screen(
             }
         )
     ) {
-        fun navigate(username: String, conversationId: String):String {
+        fun navigate(username: String, conversationId: String): String {
             return "chatting_screen/$username/$conversationId"
         }
     }
+
+    object DirectMessages : Screen(route = "direct_messages")
 }
