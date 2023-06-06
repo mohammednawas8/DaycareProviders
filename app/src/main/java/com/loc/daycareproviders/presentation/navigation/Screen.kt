@@ -93,4 +93,24 @@ sealed class Screen(
             return "daycare_service_details/$serviceId"
         }
     }
+
+    object Chatting : Screen(
+        route = "chatting_screen/{username}/{conversationId}",
+        arguments = listOf(
+            navArgument(
+                name = "username"
+            ) {
+                type = NavType.StringType
+                nullable = false
+            },
+            navArgument(name = "conversationId") {
+                type = NavType.StringType
+                nullable = false
+            }
+        )
+    ) {
+        fun navigate(username: String, conversationId: String):String {
+            return "chatting_screen/$username/$conversationId"
+        }
+    }
 }

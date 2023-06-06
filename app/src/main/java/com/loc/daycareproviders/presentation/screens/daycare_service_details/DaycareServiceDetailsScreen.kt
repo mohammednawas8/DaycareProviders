@@ -19,6 +19,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,9 +39,16 @@ import com.loc.daycareproviders.ui.Dimens.SMALL_PADDING
 fun DaycareServiceDetailsScreen(
     viewModel: DaycareServiceDetailsViewModel = hiltViewModel(),
     navigateUp: () -> Unit,
+    navigate: (String) -> Unit,
 ) {
 
     val state = viewModel.state.value
+
+    LaunchedEffect(key1 = true) {
+        viewModel.navigation.collect { route ->
+            navigate(route)
+        }
+    }
 
     StandardScreen(queue = state.queue, removeUiComponent = viewModel::removeUiComponent) {
 
@@ -57,10 +65,9 @@ fun DaycareServiceDetailsScreen(
                         text = stringResource(id = R.string.contact_provider),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = SMALL_PADDING)
-                    ) {
-                        /*TODO: Navigate to chatting screen*/
-                    }
+                            .padding(horizontal = SMALL_PADDING),
+                        onClick = viewModel::contactWithProvider
+                    )
                 }
             }
         ) {
@@ -85,7 +92,7 @@ fun DaycareServiceDetailsScreen(
                         images = state.daycareService?.images ?: listOf(),
                         modifier = Modifier
                             .weight(1f)
-                            .aspectRatio(ratio = 16/9f)
+                            .aspectRatio(ratio = 16 / 9f)
                             .padding(horizontal = SMALL_PADDING)
                     )
 

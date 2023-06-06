@@ -46,4 +46,5 @@
     <string name="contact_provider">Contact Provider</string>
     <string name="error">Error :(</string>
     <string name="write_message">Write Message</string>
+    <string name="no_messages">No Messages...</string>
 </resources>

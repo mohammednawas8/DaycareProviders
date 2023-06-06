@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.loc.daycareproviders.ui.Dimens.SMALL_PADDING
 import com.loc.daycareproviders.ui.theme.Gray
+import java.time.LocalDateTime
 
 @Composable
 fun ChattingMessageCard(
@@ -31,14 +32,6 @@ fun ChattingMessageCard(
     backgroundColor: Color,
     textColor: Color
 ) {
-
-    val date = remember {
-        chattingMessage.date
-    }
-
-    val messageDate = remember {
-        "${date.dayOfMonth}/${date.month}/${date.year} ${date.dayOfWeek} ${date.hour}:${date.minute}"
-    }
 
     var isDateVisible by remember {
         mutableStateOf(false)
@@ -54,7 +47,7 @@ fun ChattingMessageCard(
         Column(modifier = Modifier.padding(all = SMALL_PADDING)) {
             Text(text = chattingMessage.text, fontSize = 16.sp,color = textColor)
             AnimatedVisibility(visible = isDateVisible) {
-                Text(text = messageDate, fontSize = 12.sp, color = textColor.copy(alpha = 0.7f))
+                Text(text = chattingMessage.date, fontSize = 12.sp, color = textColor.copy(alpha = 0.7f))
             }
         }
     }
@@ -65,7 +58,7 @@ fun ChattingMessageCard(
 @Composable
 fun ChattingMessageCardPreview() {
     ChattingMessageCard(
-        chattingMessage = ChattingMessage("Hi, I have a question"),
+        chattingMessage = ChattingMessage("Hi, I have a question","06/05/2023 Monday 11:30"),
         backgroundColor = Gray,
         textColor = Color.Black
     )

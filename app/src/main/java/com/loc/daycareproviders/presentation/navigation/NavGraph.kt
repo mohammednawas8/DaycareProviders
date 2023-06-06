@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.loc.daycareproviders.presentation.screens.add_daycare_service.AddDaycareServiceScreen
 import androidx.navigation.navigation
 import com.loc.daycareproviders.presentation.screens.browse_daycare_services.BrowseDaycareServicesScreen
+import com.loc.daycareproviders.presentation.screens.chatting.ChattingScreen
 import com.loc.daycareproviders.presentation.screens.choose_accounts.ChooseAccountsScreen
 import com.loc.daycareproviders.presentation.screens.daycare_provider.DaycareProviderScreen
 import com.loc.daycareproviders.presentation.screens.daycare_service_details.DaycareServiceDetailsScreen
@@ -134,6 +135,20 @@ fun NavGraph() {
                 arguments = Screen.DaycareServiceDetails.arguments
             ) {
                 DaycareServiceDetailsScreen(
+                    navigateUp = {
+                        navController.navigateUp()
+                    },
+                    navigate = { route ->
+                        navController.navigate(route)
+                    }
+                )
+            }
+
+            composable(
+                route = Screen.Chatting.route,
+                arguments = Screen.Chatting.arguments
+            ) {
+                ChattingScreen(
                     navigateUp = {
                         navController.navigateUp()
                     }

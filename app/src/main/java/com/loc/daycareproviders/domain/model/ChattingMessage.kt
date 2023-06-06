@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 data class ChattingMessage(
     val text: String = "",
-    val date: LocalDateTime = LocalDateTime.now(),
-    val senderUid: String = ""
-)
+    val date: String = "",
+    val senderUid: String = "",
+) {
+}

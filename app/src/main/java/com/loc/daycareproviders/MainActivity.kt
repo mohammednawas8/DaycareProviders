@@ -15,10 +15,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DaycareProvidersTheme {
-//                NavGraph()
+                NavGraph()
 //                BrowseDaycareServicesScreen()
 //               DaycareServiceDetails()
-                ChattingScreen()
+//                ChattingScreen()
             }
         }
     }

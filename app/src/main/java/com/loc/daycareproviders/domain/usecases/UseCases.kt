@@ -6,5 +6,8 @@ data class UseCases(
     val getLoggedInUser: GetLoggedInUser,
     val logoutUser: LogoutUser,
     val publishDaycareService: PublishDaycareService,
-    val getDaycareService: GetDaycareService
+    val getDaycareService: GetDaycareService,
+    val createNewConversation: CreateNewConversation,
+    val fetchMessages: FetchMessages,
+    val sendChattingMessage: SendChattingMessage
 )

@@ -3,18 +3,14 @@ package com.loc.daycareproviders.presentation.screens.chatting
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScaffoldDefaults
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,48 +22,55 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.loc.daycareproviders.R
-import com.loc.daycareproviders.domain.model.ChattingMessage
+import com.loc.daycareproviders.presentation.common.ChattingTopAppBar
 import com.loc.daycareproviders.presentation.screens.login.StandardTextField
-import com.loc.daycareproviders.ui.Dimens.EXTRA_SMALL_PADDING
 import com.loc.daycareproviders.ui.Dimens.SMALL_PADDING
 import com.loc.daycareproviders.ui.theme.Blue
-import com.loc.daycareproviders.ui.theme.Gray
 
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ChattingScreen() {
+fun ChattingScreen(
+    viewModel: ChattingViewModel = hiltViewModel(),
+    navigateUp:() -> Unit
+) {
 
     val keyboard = LocalSoftwareKeyboardController.current
-
+    val state = viewModel.state.value
+    if (state.isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(
+                color = Color.Blue,
+                strokeWidth = 3.dp
+            )
+        }
+    }
     Column(
         modifier = Modifier.fillMaxSize(),
-    ) {
-        ChattingTopAppBar(text = "Mohammad Nawas", onBackClick = {/*TODO: Navigate up*/})
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            reverseLayout = true,
-            contentPadding = PaddingValues(all = SMALL_PADDING),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
+
         ) {
-            items(100) {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    if (it % 2 == 0) {
+        ChattingTopAppBar(text = state.username, onBackClick = navigateUp)
+
+        if (state.messages.isEmpty()) {
+            NoMessages()
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                reverseLayout = false,
+                contentPadding = PaddingValues(all = SMALL_PADDING),
+                verticalArrangement = Arrangement.spacedBy(2.dp, alignment = Alignment.Bottom)
+            ) {
+                items(state.messages) { message ->
+                    Box(modifier = Modifier.fillMaxWidth()) {
                         ChattingMessageCard(
-                            chattingMessage = ChattingMessage("Hello how are you $it"),
+                            chattingMessage = message.chattingMessage,
                             backgroundColor = Blue,
-                            modifier = Modifier.align(Alignment.TopEnd),
+                            modifier = Modifier.align(message.alignment),
                             textColor = Color.White
-                        )
-                    } else {
-                        ChattingMessageCard(
-                            chattingMessage = ChattingMessage("Hello how are you $it"),
-                            backgroundColor = Gray,
-                            modifier = Modifier.align(Alignment.TopStart),
-                            textColor = Color.Black
                         )
                     }
                 }
@@ -77,18 +80,25 @@ fun ChattingScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .imePadding(),
-            text = "Text",
+            text = state.message,
             label = stringResource(id = R.string.write_message),
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Go,
             trailingIcon = R.drawable.ic_next,
-            onValueChanged = {
-
-            },
-            onGo = {
-
-            },
-            onTrailingIconClick = {}
+            onValueChanged = viewModel::changeMessage,
+            onGo = viewModel::sendMessage,
+            onTrailingIconClick = viewModel::sendMessage
         )
+    }
+}
+
+@Composable
+fun ColumnScope.NoMessages() {
+    Box(
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth(), contentAlignment = Alignment.Center
+    ) {
+        Text(text = stringResource(id = R.string.no_messages))
     }
 }
